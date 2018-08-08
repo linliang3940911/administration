@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+
+spring:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/lin?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123
+  devtools:
+     restart:
+      enabled: true
+
+  redis:
+      host: localhost
+      port: 6379
+      password:
+
+
+
+
+  jpa:
+    hibernate:
+     ddl-auto: update
+     show-sql: true
+
+    mvc:
+      view:
+        suffix: .jsp
+        prefix: /WEB-INF/view/
+    thymeleaf:
+      cache: false
+      enabled: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: 1801a
