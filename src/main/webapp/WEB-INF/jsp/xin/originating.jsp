@@ -39,8 +39,6 @@
 <button id="btn_add" onclick="search_list()" type="button" class="btn btn-default list-group-item-success">
     <span class="glyphicon glyphicon-search" ></span>搜索
 </button>
-
-
 <button class="btn btn-primary " onclick="xinzeng()" data-target="#myModal">新增数据</button>
 <button class="btn btn-primary " onclick="tiaozhuan()" data-target="#myModal">批量删除</button>
 <div id="dividss"></div>
@@ -78,15 +76,28 @@
 
 
     function querycharge(){
-
         $('#dividss').bootstrapTable({
             url:'<%=request.getContextPath()%>/caoxin/queryCaogao',
-            pagination: true,		   //开启分页
-            pageNumber:1,              //初始化加载第几页,默认第1页
-            pageSize: 3,               //每页几条数据,超过总条数右下角将没分页
-            pageList: [2, 4, 6, 8],    //每页条数,设置为All将展示全部记录,超过总条数底部将不显示条数下拉框
-            contentType:"application/x-www-form-urlencoded;charset=UTF-8",	//必须的否则条件查询时会乱码
-            sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
+            method: "post",
+            pagination: true,
+            pageList:[1, 10, 20, 50],//分页组件
+            pageNumber:1,
+            pageSize:5,//默认每页条数
+            //search:true,//是否显示搜索框
+            //searchText:'试试',//初始化搜索文字
+            height: 700,
+            showColumns:false,//是否显示 内容列下拉框
+            showToggle:false,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            showRefresh:true,//是否显示刷新按钮
+            singleSelect : true,//单选
+            detailView:false,//设置为 true 可以显示详细页面模式。
+            showFooter:false,//是否显示列脚
+            clickToSelect: true, //是否启用点击选中行
+            contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+            sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
+            striped:true,
+
             queryParams:function(params) {
                 var bianhao =$("#bianhao").val();
                 var biaoti =$("#biaoti").val();
@@ -100,8 +111,8 @@
             },
             columns:[
                 {field:'userchek',checkbox:true},
-                {field:'xiangid',title:'id',width:200},
-                {field:'bianhao',title:'编号/自定义标题',width:200,
+                {field:'xiangid',title:'id',width:350},
+                {field:'bianhao',title:'编号/自定义标题',width:300,
                     formatter: function(value,row,index){
                         var zxc=row.bianhao;
                         var asd=row.biaoti;
@@ -109,15 +120,15 @@
                     }
 
                 },
-                {field:'fenlei',title:'所属分类/所属流程',width:200,
+                {field:'fenlei',title:'所属分类/所属流程',width:300,
                     formatter: function(value,row,index){
                        var zxc=row.fenlei;
                         var asd=row.liuchang;
                         return  zxc+"<br>"+asd;
                     }
                 },
-                {field:'bainjishiqi',title:'最后编辑日期',width:200},
-                {field:'act',title:'操作',width:200,
+                {field:'bainjishiqi',title:'最后编辑日期',width:300},
+                {field:'act',title:'操作',width:300,
                     formatter: function(value,row,index){
                         return '<button class="btn btn-primary " onclick="queryPhoneListById()"  data-toggle="modal" data-target="#myModal">修改</button>';
                     }

@@ -1,5 +1,10 @@
 package com.ll.service.lin;
 
+import com.ll.pojo.lin.WorkName;
+import com.ll.pojo.lin.WorkTree;
+
+import java.util.List;
+
 /**
  * @Description: java类作用描述
  * @Author: 林亮
@@ -11,4 +16,10 @@ package com.ll.service.lin;
  */
 public interface IModelService {
     String querymodle();
+
+    List<WorkTree> getQueryTree(Integer id);
+
+    List<WorkName> queryWork(int offset, int limit,String url);
+
+    long queryCount(String url);
 }

@@ -1,11 +1,10 @@
 server:
   port: 8081
 
-
 spring:
   datasource:
     driver-class-name:  com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/lin?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/201808?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123
   devtools:
@@ -17,18 +16,12 @@ spring:
       port: 6379
       password:
 
-
-
-
   jpa:
     hibernate:
      ddl-auto: update
      show-sql: true
 
-    mvc:
-      view:
-        suffix: .jsp
-        prefix: /WEB-INF/view/
+
     thymeleaf:
       cache: false
       enabled: false
@@ -37,3 +30,42 @@ spring:
       host: localhost
       port: 27017
       database: 1801a
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+
+
+#server:
+#  port: 8080
+#
+#
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/lin?useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: 123
+#
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
+#
+#
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    jedis:
+#      pool:
+#        max-idle: 300
+#        max-active: 600
+#        max-wait: 300
+#  data:
+#    mongodb:
+#      host: 127.0.0.1
+#      port: 27017
+#      database: 1801a
+
+

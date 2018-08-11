@@ -1,9 +1,12 @@
 package com.ll.service.lin;
 
 import com.ll.dao.lin.IModelDao;
+import com.ll.pojo.lin.WorkName;
+import com.ll.pojo.lin.WorkTree;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description: java类作用描述
@@ -23,6 +26,27 @@ public class ModelServiceImpl  implements  IModelService{
     public String querymodle() {
         String str=  ModelDao.querymodle();
 
+        return str;
+    }
+
+    @Override
+    public List<WorkTree> getQueryTree(Integer id) {
+        List<WorkTree>  list= ModelDao.getQueryTree(id);
+
+        return list;
+    }
+
+    @Override
+    public List<WorkName> queryWork(int offset, int limit,String url) {
+        List<WorkName> list=ModelDao.queryWork(offset, limit,url);
+
+        return list;
+    }
+
+    @Override
+    public long queryCount(String url) {
+
+        long str=ModelDao.queryCount(url);
         return str;
     }
 }
