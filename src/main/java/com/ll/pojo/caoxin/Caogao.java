@@ -2,7 +2,7 @@ package com.ll.pojo.caoxin;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Caogao {
     private String     xiangid;
@@ -10,7 +10,7 @@ public class Caogao {
     private String  biaoti;
     private String   fenlei;
     private String   liuchang;
-    @JSONField(format = "yyyy-MM-dd HH:mm")
+    @JSONField(format = "yyyy-MM-dd")
     private Date bainjishiqi;
 
 
