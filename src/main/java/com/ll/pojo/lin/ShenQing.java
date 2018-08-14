@@ -16,19 +16,14 @@ import java.util.Date;
 public class ShenQing {
 
     private String proceid;  //申请ID
-    @JSONField(format = "yyy-mm-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private Date procedate; //申请时间
     private String procerole; //申请的审核人
     private String proceuser;//申请人
     private Integer proceType;//申请人类型
 
-    public Integer getProceType() {
-        return proceType;
-    }
+    private String roletext; //申请的审核人
 
-    public void setProceType(Integer proceType) {
-        this.proceType = proceType;
-    }
 
     public String getProceid() {
         return proceid;
@@ -62,14 +57,31 @@ public class ShenQing {
         this.proceuser = proceuser;
     }
 
+    public Integer getProceType() {
+        return proceType;
+    }
+
+    public void setProceType(Integer proceType) {
+        this.proceType = proceType;
+    }
+
+    public String getRoletext() {
+        return roletext;
+    }
+
+    public void setRoletext(String roletext) {
+        this.roletext = roletext;
+    }
+
     @Override
     public String toString() {
         return "ShenQing{" +
-                "proceid=" + proceid +
+                "proceid='" + proceid + '\'' +
                 ", procedate=" + procedate +
                 ", procerole='" + procerole + '\'' +
-                ", proceuser=" + proceuser +
+                ", proceuser='" + proceuser + '\'' +
                 ", proceType=" + proceType +
+                ", roletext='" + roletext + '\'' +
                 '}';
     }
 }
