@@ -1,6 +1,7 @@
 package com.ll.controller.lin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ll.pojo.caoxin.User;
 import com.ll.pojo.lin.*;
 import com.ll.service.lin.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
 
@@ -193,12 +196,16 @@ public class ModelController {
     */
     @RequestMapping("/addshenqingliycheng")
     @ResponseBody
-    public  Integer  addshenqingliycheng(String woid,Integer proceType){
+    public  Integer  addshenqingliycheng(String woid,Integer proceType,HttpServletRequest request){
         ShenQing shenQing = new ShenQing();
         shenQing.setProceType(proceType);
+
+
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
         WorkName workName= ModelService.addshenqingliycheng(woid);
         shenQing.setProcerole(workName.getWorkType());
-        ModelService.addshenqingliychengs(shenQing);
+        ModelService.addshenqingliychengs(shenQing,user.getUsername());
         return  1;
     }
 
