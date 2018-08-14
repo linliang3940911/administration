@@ -10,17 +10,17 @@
 <head>
     <title>办公管理系统</title>
 </head>
-<script src="<%=request.getContextPath()%>/js/js/jquery.min.js"></script>
-<link href="<%=request.getContextPath()%>/js/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/fonts/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/css/animate.min.css" rel="stylesheet">
-<!-- Custom styling plus plugins -->
-<link href="<%=request.getContextPath()%>/js/css/custom.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/css/maps/jquery-jvectormap-2.0.1.css" />
-<link href="<%=request.getContextPath()%>/js/css/icheck/flat/green.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/css/floatexamples.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.css">
-<script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/js/jquery.min.js"></script>
+    <link href="<%=request.getContextPath()%>/js/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/js/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/js/css/animate.min.css" rel="stylesheet">
+    <!-- Custom styling plus plugins -->
+    <link href="<%=request.getContextPath()%>/js/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/css/maps/jquery-jvectormap-2.0.1.css" />
+    <link href="<%=request.getContextPath()%>/js/css/icheck/flat/green.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/js/css/floatexamples.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
 
 <body  class="nav-md">
 
@@ -39,11 +39,10 @@
                 <!-- menu prile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="" width="80px" height="60px" alt="..." class="img-circle profile_img">
+                        <img src=${loginUser.userimg} width="80px" height="60px" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <span>Welcome</span>
-                        <h2>Anthony Fernando</h2>
+                        <span>${loginUser.username}</span>
                     </div>
                 </div>
                 <!-- /menu prile quick info -->
@@ -111,6 +110,7 @@
                                     <li><a href="javascript:tiaozhuan('查看工作流报表','modle/buzhi')">查看工作流报表</a></li>
                                     <li><a href="tables.html">工作报表</a></li>
                                     <li><a href="tables.html">报表管理</a></li>
+                                    <li><a href="javascript:login()">登录注册</a></li>
                                 </ul>
                             </li>
 
@@ -119,11 +119,11 @@
                                     <li><a> 流程办理 <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu" style="display: none">
                                             <li><a href="tables.html">流程发起</a></li>
-                                            <li><a href="tables.html">草稿箱</a></li>
+                                            <li><a href="javascript:tiaozhuan('草稿箱','caoxin/show')">草稿箱</a></li>
                                             <li><a href="tables.html">代办流程</a></li>
                                             <li><a href="tables.html">已办流程</a></li>
                                             <li><a href="tables.html">工作委托</a></li>
-                                            <li><a href="tables.html">流程阅看</a></li>
+                                            <li><a href="javascript:tiaozhuan('我的申请','caoxin/shenqing')">我的申请</a></li>
                                             <li><a href="tables.html">召回记录</a></li>
                                         </ul>
                                     </li>
@@ -132,6 +132,7 @@
                                             <li><a href="tables.html">流程管理</a></li>
                                             <li><a href="tables.html">办理时限管理</a></li>
                                             <li><a href="tables.html">委托管理</a></li>
+
                                         </ul>
                                     </li>
                                 </ul>
@@ -175,9 +176,11 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-                                <li><a href="javascript:;">  个人信息</a>
+                                <li><a href="javascript:geren();">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>个人信息
+                                </a>
                                 </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i>登出</a>
+                                <li><a href="javascript:dengchu()"><i class="fa fa-sign-out pull-right"></i>登出</a>
                                 </li>
                             </ul>
                         </li>
@@ -334,7 +337,24 @@
         <!-- /top navigation -->
         <!-- page content -->
 
+        <!--  弹框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <strong>个人中心:</strong>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="table" id="Coupon"></div>
+                    <span id="span-id"></span>
 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guanbi()" >关闭</button>
+                        <span id="span-id2"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -382,13 +402,34 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.resize.js"></script>
 
 </body>
-    <script>
+<script type="text/javascript">
       function tiaozhuan(text,url){
 
           $.addtabs({iframeHeight: 900});
           $.addtabs.add({
               title:text,
               url:"<%=request.getContextPath()%>/"+url
+          });
+      }
+      function  guanbi() {
+          location.href="<%=request.getContextPath()%>/modle/queryHomePage";
+      }
+      function  dengchu() {
+          location.href="<%=request.getContextPath()%>/caoxin/dengchu";
+
+      }
+      function  login(){
+          location.href="<%=request.getContextPath()%>/caoxin/denglu";
+      }
+      function   geren(){
+          $.ajax({
+              url: '<%=request.getContextPath()%>/caoxin/gerenxinxi',
+              type:"post",
+              success:function(result){
+                  alert(result);
+                  $("#span-id").html(result) ;
+                  $("#myModal").modal("show") ;
+              }
           });
       }
     </script>
