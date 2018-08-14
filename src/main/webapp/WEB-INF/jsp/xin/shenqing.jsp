@@ -63,7 +63,7 @@
 
     function querycharge(){
         $('#dividss').bootstrapTable({
-            url:'<%=request.getContextPath()%>/caoxin/queryCaogao',
+            url:'<%=request.getContextPath()%>/caoxin/queryshen',
             method: "post",
             pagination: true,
             pageList:[ 10,15,20,30],//分页组件
@@ -80,7 +80,6 @@
             contentType:"application/x-www-form-urlencoded;charset=UTF-8",
             sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
             striped:true,
-
 //            queryParams:function(params) {
 //                var bianhao =$("#bianhao").val();
 //                var biaoti =$("#biaoti").val();
@@ -100,36 +99,39 @@
                 {field:'proceuser',title:'申请人',width:300},
                 {field:'act',title:'操作',width:300,
                     formatter: function(value,row,index){
-                        return '<button  class="btn btn-primary" onclick="queryPhoneListById(\''+row.proceid+'\')">提交</button>';
+                        return '<button class="btn btn-primary " onclick="queryPhoneListById()">查看</button>';
                     }
                 },
             ]
         });
+
     }
+
+
     <%--function tiaozhuan(){--%>
         <%--var arr=$('#dividss').bootstrapTable('getSelections');--%>
-            <%--var ids="";--%>
-            <%--var count=0;--%>
-            <%--for(var i=0;i<arr.length;i++){--%>
-                <%--ids+=",'"+arr[i]['xiangid']+"'";--%>
-                <%--count++;--%>
-            <%--}--%>
+        <%--var ids="";--%>
+        <%--var count=0;--%>
+        <%--for(var i=0;i<arr.length;i++){--%>
+            <%--ids+=",'"+arr[i]['xiangid']+"'";--%>
+            <%--count++;--%>
+        <%--}--%>
 
-            <%--ids=ids.substring(1);--%>
-            <%--if(confirm("你确定删除"+count+"条信息吗")){--%>
-                <%--alert(ids);--%>
-                <%--$.ajax({--%>
-                    <%--url:"<%=request.getContextPath()%>/caoxin/deleteCaogao",--%>
-                    <%--data:{"ids":ids},--%>
-                    <%--type:"post",--%>
-                    <%--datatype:'json',--%>
-                    <%--success:function(result){--%>
-                        <%--if(result ==1 ){--%>
-                            <%--alert("成功")--%>
-                            <%--$('#dividss').bootstrapTable("refresh");--%>
-                        <%--}--%>
+        <%--ids=ids.substring(1);--%>
+        <%--if(confirm("你确定删除"+count+"条信息吗")){--%>
+            <%--alert(ids);--%>
+            <%--$.ajax({--%>
+                <%--url:"<%=request.getContextPath()%>/caoxin/deleteCaogao",--%>
+                <%--data:{"ids":ids},--%>
+                <%--type:"post",--%>
+                <%--datatype:'json',--%>
+                <%--success:function(result){--%>
+                    <%--if(result ==1 ){--%>
+                        <%--alert("成功")--%>
+                        <%--$('#dividss').bootstrapTable("refresh");--%>
                     <%--}--%>
-                <%--});--%>
+                <%--}--%>
+            <%--});--%>
 
         <%--}--%>
 
@@ -158,18 +160,9 @@
             <%--})--%>
         <%--});--%>
     <%--}--%>
-    function queryPhoneListById(proid){
-        alert(proid);
-        $.ajax({
-            url:"<%=request.getContextPath()%>/caoxin/updateProce",
-            type:"post",
-            data:{"proceid":proid},
-            success:function(){
-                alert("成功");
-                $('#dividss').bootstrapTable('refresh');
-            }
-        })
-    }
+  function  queryPhoneListById(){
+      alert(123);
+  }
 </script>
 </body>
 </html>
