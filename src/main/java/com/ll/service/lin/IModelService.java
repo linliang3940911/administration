@@ -34,5 +34,5 @@ public interface IModelService {
 
     WorkName addshenqingliycheng(String woid);
 
-    void addshenqingliychengs(ShenQing shenQing);
+    void addshenqingliychengs(ShenQing shenQing,String username);
 }

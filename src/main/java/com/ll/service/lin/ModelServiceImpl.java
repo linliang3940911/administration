@@ -103,10 +103,10 @@ public class ModelServiceImpl  implements  IModelService{
     }
 
     @Override
-    public void addshenqingliychengs(ShenQing shenQing) {
-        String replace = UUID.randomUUID().toString().replace("-", " ");
+    public void addshenqingliychengs(ShenQing shenQing,String username) {
+        String replace = UUID.randomUUID().toString().replace("-", "");
         shenQing.setProceid(replace);
-        shenQing.setProceuser("小明");
+        shenQing.setProceuser(username);
         ModelDao.addshenqingliychengs(shenQing);
     }
 }
