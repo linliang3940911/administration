@@ -20,25 +20,51 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
 <!-- dialog -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/css/bootstrap-dialog.css" >
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 <body>
 <div class="container-fluid">
+        <input type="hidden"  id="workType">
 
     <div class="row">
         <!-- 左边功能区 -->
         <div class="col-md-2">
+            <div  style="background-color: #EBEBEB;height:40px"><h4>流程分类列表</h4>
+            </div>
             <div id="myTree"  class="panel-body"></div>
+
+
         </div>
 
         <!-- 右边功能区 -->
+
         <div class="col-md-10">
+            <ul class="nav nav-tabs" id="tablist">
+                <li role="presentation" class="active">
+
+                </li>
+            </ul>
 
             <!-- 选项卡下内容 -->
             <div class="tab-content">
+
                 <div role="tabpanel"class="tab-pane active"id="home">
+                    <div  style="background-color: #EBEBEB;height:40px">
+                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('我定义的模板','modle/addwork')">我定义的模板</button>
+
+                        <%--<div class="input-group">--%>
+                            <%--<div  class="input-group-addon" style="width:100px">流程名称 </div>--%>
+                            <%--<input type="text"  name="uname" id="orsearch"   style="width:150px" class="form-control" placeholder="请输入手机型号" >--%>
+                        <%--</div>--%>
+
+
+                        <%--<button id="btn_add" onclick="search_list()" type="button" class="btn btn-default list-group-item-success"></button>--%>
+                        <%--<span class="glyphicon glyphicon-search" ></span>搜索--%>
+                    </div>
+
                     <div id="dividss"></div>
 
 
@@ -59,7 +85,8 @@
                 $("#myTree").treeview({
                     data:date,
                     onNodeSelected:function(event, node) {
-                        querylist(node.url)
+                        $("#workType").val(node.url)
+                        $("#dividss").bootstrapTable("refresh",{offset:1})
                     }
 
                 })
@@ -83,7 +110,7 @@
                 showColumns:false,//是否显示 内容列下拉框
                 showToggle:false,//是否显示 切换试图（table/card）按钮
                 showPaginationSwitch:false,//是否显示 数据条数选择框
-                showRefresh:true,//是否显示刷新按钮
+                showRefresh:false,//是否显示刷新按钮
                 singleSelect : true,//单选
 
                 detailView:false,//设置为 true 可以显示详细页面模式。
@@ -93,20 +120,13 @@
                 sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
                 striped:true,
                 queryParams:function(params) {
-                    var name =$("#orsearch").val();
-                    var minprice =$("#minprice").val();
-                    var maxprice =$("#maxprice").val();
-                    var minimumfactoryprice =$("#minimumfactoryprice").val();
-                    var largestfactoryprice =$("#largestfactoryprice").val();
-                    params.name=name;
-                    params.minprice=minprice;
-                    params.maxprice=maxprice;
-                    params.minimumfactoryprice=minimumfactoryprice;
-                    params.largestfactoryprice=largestfactoryprice;
+                   var url= $("#workType").val()
+                    params.url=url;
                     return params;
                 },
                 columns:[
-                    {field:'woid',checkbox:true},
+                    {field:'checkse',checkbox:true},
+                    {field:'woid',title:'id',width:200},
                     {field:'woname',title:'流程名称',width:200},
                     {field:'workType',title:'所属分类',width:200,
                          formatter: function(value,row,index){
@@ -141,11 +161,24 @@
                          }},
                     {field:'sdhj',title:'操作',width:200,
                         formatter: function(value,row,index){
-                            return "";
+                            return "<button type=button onclick=\"tiaozhuan('添加属性','modle/attribute')\" class='btn btn-warning'>设置属性</button>";
                         }
                     },
                 ]
             });
+        }
+        function tiaozhuan(text,url){
+            var str = $('#dividss').bootstrapTable('getSelections'); //获取表选择的行
+            var id="";
+            for (var int = 0; int < str.length; int++) {
+                id=str[int].woid
+            }
+            $.addtabs({iframeHeight: 900});
+            $.addtabs.add({
+                title:text,
+                url:"<%=request.getContextPath()%>/"+url+"?woid="+id
+            });
+
         }
 
 

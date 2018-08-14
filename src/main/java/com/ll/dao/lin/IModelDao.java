@@ -1,11 +1,10 @@
 package com.ll.dao.lin;
 
-import com.ll.pojo.lin.WorkName;
-import com.ll.pojo.lin.WorkTree;
+import com.ll.pojo.lin.*;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.web.bind.annotation.Mapping;
 
 import java.util.List;
 
@@ -24,8 +23,28 @@ public interface IModelDao {
     String querymodle();
     @Select("select * from ll_workTree where pid=#{id} ")
     List<WorkTree> getQueryTree(Integer id);
+
     @Select("select * from ll_workname  LIMIT #{offset},#{limit}")
-    List<WorkName> queryWork(@Param("offset") int offset, @Param("limit")int limit,@Param("url") String url);
+    List<WorkName> queryWork(@Param("offset") int offset, @Param("limit")int limit,@Param("workName") WorkTree  workName);
     @Select("select count(*) from ll_workname ")
-    long queryCount(@Param("url") String url);
+    long queryCount( WorkTree  workName);
+
+    @Select("select * from ll_workname where workType=#{workName.url} LIMIT #{offset},#{limit}")
+    List<WorkName> queryWorks(@Param("offset")int offset,@Param("limit") int limit,@Param("workName") WorkTree  workName);
+    @Select("select count(*) from ll_workname  where workType=#{workName.url}")
+    long queryCounts(@Param("workName")WorkTree  workName);
+    @Insert("INSERT into ll_attribute values(#{attribute1.attributeid},#{attribute1.attributename},#{attribute1.attributeType}) ")
+    void commseiForm(@Param("attribute1")Attribute attribute1);
+    @Insert("INSERT into ll_nameAttribute(name,attributeid) values(#{woid},#{replace})")
+    void addNameAttributeid(@Param("woid")String woid,@Param("replace") String replace);
+    @Select("select * from ll_role")
+    List<Procedures> queryProcedurelist();
+    @Insert("INSERT into ll_workname(woid,woname,workType) values(#{woid},#{woname},#{workType})")
+    void addWorkName(WorkName workName);
+    @Select("select b.attributeid,b.attributename,b.attributeType from ll_workname a,ll_attribute b,ll_nameattribute  c where c.name=a.woid and c.attributeid=b.attributeid and c.name=#{workName.woid}")
+    List<Attribute>  application(@Param("workName") WorkName workName);
+    @Select("select * from ll_workname where woid=#{woid}")
+    WorkName addshenqingliycheng(@Param("woid") String woid);
+    @Insert("INSERT into ll_ShenQing(proceid,procedate,procerole,proceuser,proceType) values(#{shenQing.proceid},#{shenQing.procedate},#{shenQing.procerole},#{shenQing.proceuser},#{shenQing.proceType})")
+    void addshenqingliychengs(@Param("shenQing") ShenQing shenQing);
 }

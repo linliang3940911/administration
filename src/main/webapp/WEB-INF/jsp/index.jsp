@@ -75,7 +75,7 @@
                                     </li>
                                     <li><a href="form_upload.html">出差登记</a>
                                     </li>
-                                    <li><a href="form_buttons.html">请假登记</a>
+                                    <li><a href="javascript:tiaozhuan('发起申请','modle/queryListWorkName')">发起申请</a>
                                     </li>
                                     <li><a href="form_buttons.html">外出登记</a>
                                     </li>
