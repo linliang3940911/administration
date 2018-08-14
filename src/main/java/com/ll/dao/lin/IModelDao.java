@@ -45,6 +45,6 @@ public interface IModelDao {
     List<Attribute>  application(@Param("workName") WorkName workName);
     @Select("select * from ll_workname where woid=#{woid}")
     WorkName addshenqingliycheng(@Param("woid") String woid);
-    @Insert("INSERT into ll_ShenQing(proceid,procedate,procerole,proceuser,proceType) values(#{shenQing.proceid},#{shenQing.procedate},#{shenQing.procerole},#{shenQing.proceuser},#{shenQing.proceType})")
+    @Insert("INSERT into ll_ShenQing(proceid,procedate,procerole,proceuser,proceType) values(#{shenQing.proceid},now(),#{shenQing.procerole},#{shenQing.proceuser},#{shenQing.proceType})")
     void addshenqingliychengs(@Param("shenQing") ShenQing shenQing);
 }
