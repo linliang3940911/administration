@@ -13,7 +13,7 @@
                             <label>姓名：</label>
                       </td>
                       <td>
-                            <input type="text" value="超级管理员" readonly style="width:200px" class="form-control" >
+                            <input type="text" value="${loginUser.username}" readonly style="width:200px" class="form-control" >
                       </td>
                 </tr>
                 <tr>
