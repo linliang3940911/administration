@@ -3,7 +3,7 @@ package com.ll;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -12,6 +12,14 @@ import org.springframework.http.converter.HttpMessageConverter;
 
 @SpringBootApplication
 public class AdministrationApplication {
+
+
+	//通过@Bean注入输出存到rabbit(队列）里的东西
+	@Bean
+	public Queue Queue() {
+		return new Queue("hello");
+	}
+
 
 	@Bean
 	public HttpMessageConverters fastJsonHttpMessageConverters() {
@@ -28,6 +36,9 @@ public class AdministrationApplication {
 		//返回配置对象
 		return new HttpMessageConverters(converter);
 	}
+
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdministrationApplication.class, args);
