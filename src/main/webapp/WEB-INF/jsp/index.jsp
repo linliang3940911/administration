@@ -9,26 +9,30 @@
 <html>
 <head>
     <title>办公管理系统</title>
+
 </head>
-    <script src="<%=request.getContextPath()%>/js/js/jquery.min.js"></script>
-    <link href="<%=request.getContextPath()%>/js/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/js/fonts/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/js/css/animate.min.css" rel="stylesheet">
-    <!-- Custom styling plus plugins -->
-    <link href="<%=request.getContextPath()%>/js/css/custom.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/css/maps/jquery-jvectormap-2.0.1.css" />
-    <link href="<%=request.getContextPath()%>/js/css/icheck/flat/green.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/js/css/floatexamples.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.css">
-    <script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+
+<script src="<%=request.getContextPath()%>/js/js/jquery.min.js"></script>
+<link href="<%=request.getContextPath()%>/js/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/js/fonts/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/js/css/animate.min.css" rel="stylesheet">
+<!-- Custom styling plus plugins -->
+<link href="<%=request.getContextPath()%>/js/css/custom.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/css/maps/jquery-jvectormap-2.0.1.css" />
+<link href="<%=request.getContextPath()%>/js/css/icheck/flat/green.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/js/css/floatexamples.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.css">
+<script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-treeview/bootstrap-treeview.min.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-table/dist/bootstrap-table.css">
+<script src="<%=request.getContextPath()%>/js/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
 <body  class="nav-md">
-
 <div class="container body">
-
-
     <div class="main_container">
-
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
 
@@ -121,10 +125,10 @@
                                             <li><a href="tables.html">流程发起</a></li>
                                             <li><a href="javascript:tiaozhuan('草稿箱','caoxin/show')">草稿箱</a></li>
                                             <li><a href="tables.html">代办流程</a></li>
-                                            <li><a href="tables.html">已办流程</a></li>
+                                            <li><a href="javascript:tiaozhuan('审核流程','caoxin/shenhe')">审核流程</a></li>
                                             <li><a href="tables.html">工作委托</a></li>
                                             <li><a href="javascript:tiaozhuan('我的申请','caoxin/shenqing')">我的申请</a></li>
-                                            <li><a href="tables.html">召回记录</a></li>
+                                            <li><a href="javascript:tiaozhuan('召回记录','caoxin/bohui')">召回记录</a></li>
                                         </ul>
                                     </li>
                                     <li><a> 流程管理 <span class="fa fa-chevron-down"></span></a>
@@ -139,7 +143,6 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
                 <!-- /menu footer buttons -->
                 <div class="sidebar-footer hidden-small">
@@ -156,13 +159,11 @@
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
-
             </div>
         </div>
-
+    </div>
         <!-- top navigation -->
         <div class="top_nav">
-
             <div class="nav_menu">
                 <nav class="" role="navigation">
                     <div class="nav toggle">
@@ -172,7 +173,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<%=request.getContextPath()%>/js/images/img.jpg" alt="">John Doe
+                                <img src=${loginUser.userimg} alt="">个人中心
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
@@ -188,72 +189,21 @@
                         <li role="presentation" class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">6</span>
+                                <span class="badge bg-green">❗</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
                                 <li>
                                     <a>
                                             <span class="image">
-                                        <img src="<%=request.getContextPath()%>/js/images/img.jpg" alt="Profile Image" />
+                                        <img src=${loginUser.userimg}>
                                     </span>
                                         <span>
-                                        <span>John Smith</span>
+                                        <span>${loginUser.username}</span>
                                             <span class="time">3 mins ago</span>
                                             </span>
                                         <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
                                     </span>
                                     </a>
-                                </li>
-                                <li>
-                                    <a>
-                                            <span class="image">
-                                        <img src="<%=request.getContextPath()%>/js/images/img.jpg" alt="Profile Image" />
-                                    </span>
-                                        <span>
-                                        <span>John Smith</span>
-                                            <span class="time">3 mins ago</span>
-                                            </span>
-                                        <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                            <span class="image">
-                                        <img src="<%=request.getContextPath()%>/js/images/img.jpg" alt="Profile Image" />
-                                    </span>
-                                        <span>
-                                        <span>John Smith</span>
-                                            <span class="time">3 mins ago</span>
-                                            </span>
-                                        <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                            <span class="image">
-                                        <img src="<%=request.getContextPath()%>/js/images/img.jpg" alt="Profile Image" />
-                                    </span>
-                                        <span>
-                                        <span>John Smith</span>
-                                            <span class="time">3 mins ago</span>
-                                            </span>
-                                        <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="text-center">
-                                        <a>
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
                                 </li>
                             </ul>
                         </li>
@@ -266,35 +216,32 @@
 
         <div class="right_col" role="main">
             <div class="row">
-
-
                 <!-- 右边功能区 -->
                 <div class="tab-pane active"   >
                     <!-- 新选项卡 -->
                     <ul class="nav nav-tabs" id="tablist">
                         <li role="presentation" class="active">
                             <a href="#home" role="tab" data-toggle="tab">我的首页</a>
+
                         </li>
                     </ul>
                     <!-- 选项卡下内容 -->
                     <div class="tab-content">
                         <div role="tabpanel"class="tab-pane active"id="home">
-
                             <br />
                             <div class="">
 
-                                <div class="row top_tiles">
-                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <div class="tile-stats">
+                                <div class="row top_tiles"  >
+                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="jinji()" >
+                                        <div class="tile-stats" >
                                             <div class="icon"><i class="fa fa-caret-square-o-right"></i>
                                             </div>
                                             <div class="count">179</div>
-
                                             <h3>紧急流程</h3>
                                             <p>紧急事务请快速解决</p>
                                         </div>
                                     </div>
-                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="zhongyao()">
                                         <div class="tile-stats">
                                             <div class="icon"><i class="fa fa-comments-o"></i>
                                             </div>
@@ -304,7 +251,7 @@
                                             <p>Lorem ipsum psdea itgum rixt.</p>
                                         </div>
                                     </div>
-                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="putong()">
                                         <div class="tile-stats">
                                             <div class="icon"><i class="fa fa-sort-amount-desc"></i>
                                             </div>
@@ -314,8 +261,8 @@
                                             <p>Lorem ipsum psdea itgum rixt.</p>
                                         </div>
                                     </div>
-                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <div class="tile-stats">
+                                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12" onclick="qita()">
+                                        <div class="tile-stats"  >
                                             <div class="icon"><i class="fa fa-check-square-o"></i>
                                             </div>
                                             <div class="count">179</div>
@@ -324,18 +271,18 @@
                                             <p>Lorem ipsum psdea itgum rixt.</p>
                                         </div>
                                     </div>
+                                    <div  id="divzxc1"></div>
+                                    <div  id="divzxc2"></div>
+                                    <div  id="divzxc3"></div>
+                                    <div  id="divzxc4"></div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-        <!-- /top navigation -->
-        <!-- page content -->
 
         <!--  弹框 -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -355,7 +302,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
 
 
 
@@ -389,8 +336,7 @@
 <!-- sparkline -->
 <script src="<%=request.getContextPath()%>/js/js/sparkline/jquery.sparkline.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/js/custom.js"></script>
-<!-- flot js -->z
-<!--[if lte IE 8]><script type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="js/excanvas.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.pie.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.orderBars.js"></script>
@@ -400,9 +346,39 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.stack.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/curvedLines.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/js/flot/jquery.flot.resize.js"></script>
+        <script type="text/javascript">
+function zxc() {
+    $('#divzxc1').bootstrapTable({
+        url:'<%=request.getContextPath()%>/caoxin/queryLiuChang1',
+        method: "post",
+        columns:[
+            {field:'userchek',checkbox:true},
+            {field:'procedate',title:'时间',width:300},
+            {field:'roletext',title:'审核人',width:300},
+            {field:'proceuser',title:'申请人',width:300},
+            {field:'woname',title:'流程名字',width:300},
+        ]
+    });
+}
+            function jinji(){
+                zxc();
+            }
+            function zhongyao(){
+                zxc();
+            }
+            function putong(){
 
+                zxc();
+            }
+            function qita(){
+                zxc();
+            }
+        </script>
 </body>
+
 <script type="text/javascript">
+
+
       function tiaozhuan(text,url){
 
           $.addtabs({iframeHeight: 900});
@@ -433,6 +409,4 @@
           });
       }
     </script>
-
-
 </html>
