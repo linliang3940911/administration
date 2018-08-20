@@ -86,6 +86,7 @@ public class ModelServiceImpl  implements  IModelService{
     public void addWorkName(WorkName workName) {
         String replace = UUID.randomUUID().toString().replace("-", " ");
         workName.setWoid(replace);
+
         ModelDao.addWorkName(workName);
     }
 
@@ -103,10 +104,12 @@ public class ModelServiceImpl  implements  IModelService{
     }
 
     @Override
-    public void addshenqingliychengs(ShenQing shenQing,String username) {
+    public void addshenqingliychengs(ShenQing shenQing,String username,String userid,String woid) {
         String replace = UUID.randomUUID().toString().replace("-", "");
         shenQing.setProceid(replace);
         shenQing.setProceuser(username);
+        shenQing.setUserid(userid);
+        shenQing.setWoid(woid);
         ModelDao.addshenqingliychengs(shenQing);
     }
 }
