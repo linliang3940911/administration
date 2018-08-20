@@ -67,12 +67,11 @@
 
                             <li><a><i class="fa fa-edit"></i>个人考勤<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu" style="display: none">
-                                    <li><a href="form.html">上下班登录</a></li>
-                                    <li><a href="form_validation.html">我的考勤管理</a>
+                                    <li><a href="javascript:tiaozhuan('上下班登记','jumpController/toRegistrationCommuting')">上下班登记</a></li>
+                                    <li><a href="javascript:tiaozhuan('我的考勤管理','jumpController/toAttendanceManagement')">我的考勤管理</a></li>
+                                    <li><a href="javascript:tiaozhuan('加班登记','jumpController/toOvertimeRegistration')">加班登记</a>
                                     </li>
-                                    <li><a href="form_wizards.html">加班登记</a>
-                                    </li>
-                                    <li><a href="form_upload.html">出差登记</a>
+                                    <li><a href="javascript:tiaozhuan('出差登记','jumpController/toTravelRegistration')">出差登记</a>
                                     </li>
                                     <li><a href="javascript:tiaozhuan('发起申请','modle/queryListWorkName')">发起申请</a>
                                     </li>
@@ -85,15 +84,15 @@
 
                             <li><a><i class="fa fa-desktop"></i>考勤管理<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu" style="display: none">
-                                    <li><a href="general_elements.html">考勤机记录查看</a>
+                                    <li><a href="javascript:tiaozhuan('考勤机记录查看','jumpController/toKaoQinJiJiLu')">考勤机记录查看</a>
                                     </li>
-                                    <li><a href="media_gallery.html">考勤记录</a>
+                                    <li><a href="javascript:tiaozhuan('考勤记录','jumpController/toSurveyRecords')">考勤记录</a>
                                     </li>
-                                    <li><a href="typography.html">在岗状态</a>
+                                    <li><a href="javascript:tiaozhuan('在岗状态','jumpController/toOnTheJobStatus')">在岗状态</a>
                                     </li>
-                                    <li><a href="icons.html">考勤统计</a>
+                                    <li><a href="javascript:tiaozhuan('考勤统计','jumpController/toAttendanceStatistics')">考勤统计</a>
                                     </li>
-                                    <li><a href="glyphicons.html">考勤设置</a>
+                                    <li><a href="javascript:tiaozhuan('考勤设置','jumpController/toAttendanceSetting')">考勤设置</a>
                                     </li>
                                     <li><a href="widgets.html">排班设置</a>
                                     </li>
@@ -111,6 +110,7 @@
                                     <li><a href="tables.html">工作报表</a></li>
                                     <li><a href="tables.html">报表管理</a></li>
                                     <li><a href="javascript:login()">登录注册</a></li>
+                                    <li><a href="javascript:tiaozhuan('查询操作日志','jumpController/toOperationLog')">查询操作日志</a></li>
                                 </ul>
                             </li>
 
