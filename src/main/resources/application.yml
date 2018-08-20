@@ -30,6 +30,12 @@ spring:
       host: localhost
       port: 27017
       database: 1801a
+  application:
+      name:
+      host: 15672
+      port: 127.0.0.1
+      username: guest
+      password: guest
   mvc:
     view:
       prefix: /WEB-INF/jsp/
