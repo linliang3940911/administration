@@ -3,6 +3,9 @@ package com.ll.service.yre;
 import com.alibaba.fastjson.JSONObject;
 import com.ll.pojo.yre.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 public interface IYreService {
     JSONObject queryRegistration(Integer offset, Integer limit, Commute commute);
 
@@ -10,19 +13,33 @@ public interface IYreService {
 
     void addReason2(Commute commute);
 
-    JSONObject queryMySchedule(Integer offset, Integer limit, KaoQinBanCi kaoqinbanci);
+    JSONObject queryMySchedule(Integer offset, Integer limit, HttpServletRequest request);
 
-    JSONObject queryMyHoliday(Integer offset, Integer limit, Holiday holiday);
+    JSONObject queryMyHoliday(Integer offset, Integer limit, HttpServletRequest request);
 
-    JSONObject queryOvertimeRegistration(Integer offset, Integer limit, JiaBan jiaBan);
+    JSONObject queryOvertimeRegistration(Integer offset, Integer limit, JiaBan jiaBan, HttpServletRequest request);
 
     JiaBan queryxiangqing(String jiabanid);
 
     void addOvertimeRegistration(JiaBan jiaBan);
 
-    JSONObject queryRavelRegistration(Integer offset, Integer limit, Travel travel);
+    JSONObject queryRavelRegistration(Integer offset, Integer limit, Travel travel, HttpServletRequest request);
 
     Travel queryTravelXiangQing(String travelid);
 
     void addTravelRegistration(Travel travel);
+
+    void operationLog(String operationMethod);
+
+    JSONObject queryMongodbOperation(Integer offset, Integer limit, OperationPojo operationPojo);
+
+    JSONObject queryKaoQinJiJiLu(Integer offset, Integer limit, KaoQinJi kaoQinJi);
+
+    List<DeptPojo> queryDeptTree();
+
+    JSONObject queryOnTheJobStatus(Integer offset, Integer limit, Onduty onduty);
+
+    JSONObject queryAttendanceStatistics(Integer offset, Integer limit, AttendanceStatistics attendanceStatistics);
+
+    JSONObject queryAttendancesetting(Integer offset, Integer limit, Attendancesetting attendancesetting);
 }
