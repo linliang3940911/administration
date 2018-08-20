@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
-  Date: 2018-08-10
-  Time: 22:24
+  Date: 2018-08-18
+  Time: 15:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,28 +25,7 @@
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
+<div id="dividss"></div>
 
-    <form id="fromAdd">
-            <input type="text"  style="width: 200px"   class="form-control" name="bianhao" placeholder="请输入编号">
-            <input type="text" style="width: 200px"    class="form-control" name="biaoti" placeholder="请输入标题">
-            <input type="text"  style="width: 200px"    class="form-control" name="fenlei" placeholder="请输入分类">
-            <input type="text" style="width: 200px"     class="form-control" name="liuchang" placeholder="请输入所属流场">
-        <button type="submit"     class="btn btn-default" onclick="addohih()">提交</button>
-    </form>
-
-<script type="text/javascript">
-    function addohih(){
-        $.ajax({
-            url:"<%=request.getContextPath()%>/caoxin/insertorig",
-            data:$("#fromAdd").serialize(),
-            type:"post",
-            success:function(){
-            },
-            error:function(){
-                location.href="<%=request.getContextPath()%>/caoxin/show"
-            }
-        });
-    }
-</script>
 </body>
 </html>

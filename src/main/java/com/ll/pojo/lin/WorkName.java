@@ -13,6 +13,8 @@ public class WorkName {
     private String woname;
     private String woid;
     private String workType;
+    private String conditio;
+    private String  dengji;
 
     public String getWoname() {
         return woname;
@@ -20,14 +22,6 @@ public class WorkName {
 
     public void setWoname(String woname) {
         this.woname = woname;
-    }
-
-    public String getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(String workType) {
-        this.workType = workType;
     }
 
     public String getWoid() {
@@ -38,12 +32,38 @@ public class WorkName {
         this.woid = woid;
     }
 
+    public String getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(String workType) {
+        this.workType = workType;
+    }
+
+    public String getConditio() {
+        return conditio;
+    }
+
+    public void setConditio(String conditio) {
+        this.conditio = conditio;
+    }
+
+    public String getDengji() {
+        return dengji;
+    }
+
+    public void setDengji(String dengji) {
+        this.dengji = dengji;
+    }
+
     @Override
     public String toString() {
         return "WorkName{" +
                 "woname='" + woname + '\'' +
                 ", woid='" + woid + '\'' +
                 ", workType='" + workType + '\'' +
+                ", conditio='" + conditio + '\'' +
+                ", dengji='" + dengji + '\'' +
                 '}';
     }
 }

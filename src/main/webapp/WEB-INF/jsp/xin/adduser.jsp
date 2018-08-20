@@ -65,11 +65,9 @@
             data:$("#adduserid").serialize(),
             type:"post",
             success:function(){
-                alert("成功")
                 location.href="<%=request.getContextPath()%>/caoxin/denglu"
             },
             error:function(){
-                alert("成功")
                 location.href="<%=request.getContextPath()%>/caoxin/denglu"
             }
         });
@@ -80,10 +78,8 @@
         src="<%=request.getContextPath() %>/tool/EasyUI/jquery.min.js"></script>
 <script type="text/javascript"
         src="<%=request.getContextPath() %>/tool/EasyUI/jquery.easyui.min.js"></script>
-
 <script type="text/javascript"
         src="<%=request.getContextPath() %>/tool/EasyUI/util-js.js"></script>
-
 <script type="text/javascript" src="<%=request.getContextPath()%>/tool/uploadify/jquery.uploadify.min.js"></script>
 
 

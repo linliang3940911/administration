@@ -18,47 +18,28 @@
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
-<button class="btn btn-primary "  data-dismiss="modal" aria-hidden="true" onclick="querydc()">导出</button>
 <div id="dividss"></div>
+
 <!--  弹框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <strong>详情:</strong>
+                <strong>个人中心:</strong>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="table" id="Coupon"></div>
             <span id="span-id"></span>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guanbi()" >关闭</button>
                 <span id="span-id2"></span>
             </div>
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
-    function querydc(){
-        $.ajax({
-            url : "<%=request.getContextPath()%>/caoxin/querydaochulist",
-            type: "post",
-            success:function(){
-                alert("导出成功")
-            },
-            error:function(){
-                alert("导出失败")
-            },
-
-        })
-    }
-
-
-
-
-
-
-
-
     $(function(){
         querycharge();
     });
@@ -69,6 +50,7 @@
     function xinzeng() {
         location.href="<%=request.getContextPath()%>/caoxin/addor"
     }
+
     function search_list(){
         $("#dividss").bootstrapTable("refresh",{offset:1})
     }
@@ -93,11 +75,9 @@
             striped:true,
             columns:[
                 {field:'userchek',checkbox:true},
-                {field:'proceid',title:'id',width:350},
-                {field:'procedate',title:'时间',width:300},
                 {field:'roletext',title:'审核人',width:300,
                     formatter: function(value,row,index){
-                    var zxc=row.roletext;
+                        var zxc=row.roletext;
                         if(zxc !=null){
                             str=zxc.split(",")
                             for(var i=0;i<str.length;i++){
@@ -108,24 +88,60 @@
                     }
                 },
                 {field:'proceuser',title:'申请人',width:300},
+                {field:'proceuser',title:'流程名字',width:300},
                 {field:'act',title:'操作',width:300,
                     formatter: function(value,row,index){
-                        return '<button class="btn btn-primary "  data-dismiss="modal" aria-hidden="true" onclick="chaKanXiangQing(\''+row.proceid+'\')">查看</button>';
+
+                    if(row.roletext!=null){
+                        var  zxc=  '<button class="btn btn-primary " id="butt1"  data-dismiss="modal" aria-hidden="true" onclick="tongguo(\''+row.proceid+'\')">通过</button>'
+                            +'<button class="btn btn-primary "  id="butt2" data-dismiss="modal" aria-hidden="true" onclick="bohui(\''+row.proceid+'\')">驳回</button>'
+                            +'<button class="btn btn-primary "  id="butt3" data-dismiss="modal" aria-hidden="true" onclick="zhipai(\''+row.proceid+'\')">指派</button>'
+                        return zxc;
+                    }
+                    if(row.roletext==null){
+                        var  zxc=  '<button class="btn btn-default " id="butt1"  data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">通过</button>'
+                            +'<button class="btn btn-default "  id="butt2" data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">驳回</button>'
+                            +'<button class="btn btn-default "  id="butt3" data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">指派</button>'
+                        return zxc;
+
+                    }
+
                     }
                 },
             ]
         });
     }
-    function   chaKanXiangQing(proceid){
+    function  tongguo(proceid){
         $.ajax({
-            url: '<%=request.getContextPath()%>/caoxin/xiangqing?proceid='+proceid,
+            url: '<%=request.getContextPath()%>/caoxin/tongguo?proceid='+proceid,
             type:"post",
-            success:function(result){
-                $("#span-id").html(result);
-                $("#myModal").modal("show");
+            success:function(){
+                location.href="<%=request.getContextPath()%>/caoxin/shenhe"
             }
         });
     }
+    function  bohui(proceid){
+        $.ajax({
+            url: '<%=request.getContextPath()%>/caoxin/bohui?proceid='+proceid,
+            type:"post",
+            success:function(){
+                location.href="<%=request.getContextPath()%>/caoxin/shenhe"
+            }
+        });
+    }
+    function  zhipai(proceid){
+        $.ajax({
+            url: '<%=request.getContextPath()%>/caoxin/zhipai',
+            type:"post",
+            data:{"proceid":proceid},
+            success:function(result){
+                $("#span-id").html(result) ;
+                $("#myModal").modal("show") ;
+            }
+        });
+
+    }
+
 </script>
 </body>
 </html>

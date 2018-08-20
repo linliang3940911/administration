@@ -17,13 +17,20 @@ public class ShenQing {
 
     private String proceid;  //申请ID
     @JSONField(format = "yyyy-MM-dd")
-    private Date procedate; //申请时间
-    private String procerole; //申请的审核人
-    private String proceuser;//申请人
+    private Date    procedate; //申请时间
+    private String  procerole; //申请的审核人
+    private String  proceuser;//申请人
     private Integer proceType;//申请人类型
+    private String  shenhetongguo;
+    //关联字段
+    private String  userid;
+    private  String  woid;
 
+
+    //业务字段
     private String roletext; //申请的审核人
-
+    private  String  woname;
+    private  Integer  dengji;
 
     public String getProceid() {
         return proceid;
@@ -65,12 +72,52 @@ public class ShenQing {
         this.proceType = proceType;
     }
 
+    public String getShenhetongguo() {
+        return shenhetongguo;
+    }
+
+    public void setShenhetongguo(String shenhetongguo) {
+        this.shenhetongguo = shenhetongguo;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getWoid() {
+        return woid;
+    }
+
+    public void setWoid(String woid) {
+        this.woid = woid;
+    }
+
     public String getRoletext() {
         return roletext;
     }
 
     public void setRoletext(String roletext) {
         this.roletext = roletext;
+    }
+
+    public String getWoname() {
+        return woname;
+    }
+
+    public void setWoname(String woname) {
+        this.woname = woname;
+    }
+
+    public Integer getDengji() {
+        return dengji;
+    }
+
+    public void setDengji(Integer dengji) {
+        this.dengji = dengji;
     }
 
     @Override
@@ -81,7 +128,12 @@ public class ShenQing {
                 ", procerole='" + procerole + '\'' +
                 ", proceuser='" + proceuser + '\'' +
                 ", proceType=" + proceType +
+                ", shenhetongguo='" + shenhetongguo + '\'' +
+                ", userid='" + userid + '\'' +
+                ", woid='" + woid + '\'' +
                 ", roletext='" + roletext + '\'' +
+                ", woname='" + woname + '\'' +
+                ", dengji=" + dengji +
                 '}';
     }
 }

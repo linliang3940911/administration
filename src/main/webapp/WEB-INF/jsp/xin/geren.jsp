@@ -29,7 +29,8 @@
 <body>
 <center>
     姓名<input type="text"  name="username" value="${user.username}"  ><br>
-    密码<input type="text"  name="pwd" value="${user.username}"><br>
+    密码<input type="password"  name="pwd" value="${user.pwd}"><br>
+
     性别<input type="radio" name="usersex" value="1" <c:if test="${user.usersex ==1}">checked</c:if> > 男
     <input type="radio" name="usersex" value="2" <c:if test="${user.usersex ==2}">checked</c:if> > 女<br>
 

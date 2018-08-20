@@ -39,12 +39,12 @@ public interface IModelDao {
     void addNameAttributeid(@Param("woid")String woid,@Param("replace") String replace);
     @Select("select * from ll_role")
     List<Procedures> queryProcedurelist();
-    @Insert("INSERT into ll_workname(woid,woname,workType) values(#{woid},#{woname},#{workType})")
+    @Insert("INSERT into ll_workname(woid,woname,conditio,dengji,workType) values(#{woid},#{woname},#{conditio},#{dengji},#{workType})")
     void addWorkName(WorkName workName);
     @Select("select b.attributeid,b.attributename,b.attributeType from ll_workname a,ll_attribute b,ll_nameattribute  c where c.name=a.woid and c.attributeid=b.attributeid and c.name=#{workName.woid}")
     List<Attribute>  application(@Param("workName") WorkName workName);
     @Select("select * from ll_workname where woid=#{woid}")
     WorkName addshenqingliycheng(@Param("woid") String woid);
-    @Insert("INSERT into ll_ShenQing(proceid,procedate,procerole,proceuser,proceType) values(#{shenQing.proceid},now(),#{shenQing.procerole},#{shenQing.proceuser},#{shenQing.proceType})")
+    @Insert("INSERT into ll_ShenQing(proceid,procedate,procerole,proceuser,proceType,userid,woid) values(#{shenQing.proceid},now(),#{shenQing.procerole},#{shenQing.proceuser},#{shenQing.proceType},#{shenQing.userid},#{shenQing.woid})")
     void addshenqingliychengs(@Param("shenQing") ShenQing shenQing);
 }

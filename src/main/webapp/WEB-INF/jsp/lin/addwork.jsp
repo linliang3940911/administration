@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib  uri="http://java.sun.com/jstl/core" prefix="c"  %>
 <html>
 <head>
     <title>Title</title>
@@ -26,15 +27,28 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 <body>
+
     <center><h2>新增流程页面</h2></center>
     <form  class="form-inline"  id="form-id">
+        <input type="radio" name="dengji" value="1"/>紧急流程
+        <input type="radio" name="dengji" value="2"/>重要流程
+        <input type="radio" name="dengji" value="3"/>普通流程
+        <input type="radio" name="dengji" value="4"/>其他代办流程
+        <div class="input-group"  >
+            <div  class="input-group-addon" style="width:100px">流程分类</div>
+            <select name="workType"  class="form-control"  onmousedown="querytree()"  id="workid">
+                <option >-请选择-</option>
+            </select><br>
+        </div>
+
+
         <div class="input-group">
             <div  class="input-group-addon" style="width:150px">名称 </div>
             <input type="text"  name="woname" id="orsearch"   style="width:300px" class="form-control" placeholder="请输入流程名称  " >
         </div>
         <div class="input-group"  >
       <div  class="input-group-addon" style="width:100px">设置审核人员</div>
-            <select name="workType"  class="form-control"  onmousedown="querylist()"  id="select-id">
+            <select name="conditio"  class="form-control"  onmousedown="querylist()"  id="select-id">
                 <option >-请选择-</option>
             </select><br>
         </div>
@@ -44,13 +58,7 @@
 
 
 
-        <input type="hidden" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"></input>
-
-
-
-
-
-
+    <input type="hidden" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"></input>
     </form>
     <button type="button" onclick="tianjia()" class="btn btn-warning"><h4>设置审核人</h4></button>
     <button type="button" onclick="yanchukuang()" class="btn btn-warning"><h4>提交流程</h4></button>
@@ -59,9 +67,24 @@
 
         function  tianjia(){
             shuzi++
-            var str="<div class=\"input-group\"><div  class=\"input-group-addon\" style=\"width:200px\">设置审核人员</div><select name=\"workType\"  onmousedown='querylist("+shuzi+")' id='select-id"+shuzi+"'  class=\"form-control\"> </select><br><div>"
+            var str="<div class=\"input-group\"><div  class=\"input-group-addon\" style=\"width:200px\">设置审核人员</div><select name=\"conditio\"  onmousedown='querylist("+shuzi+")' id='select-id"+shuzi+"'  class=\"form-control\"> </select><br><div>"
             var st1=":"
             $("#span-id").append(str)
+        }
+
+        function querytree() {
+            $.ajax({
+                url:"<%=request.getContextPath()%>/caoxin/queryListTree",
+                type:"post",
+                success:function(listTree){
+                    var str="<option >-请选择-</option>"
+                    for(var i=0;i<listTree.length;i++){
+                        str+="<option value="+listTree[i].id+">"+listTree[i].text+"</option>"
+                    }
+                    $("#workid").html(str);
+                }
+            })
+
         }
         function querylist(){
             $.ajax({
@@ -80,12 +103,7 @@
 
               }
             })
-
-
         }
-
-
-
         function yanchukuang(){
         $.ajax({
          url:"<%=request.getContextPath()%>/modle/addWorkName",
