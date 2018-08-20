@@ -19,6 +19,8 @@ public class User {
     private String qiyeweixinhao;//
     private String userimg;//
     private String pwd;//
+    private String deptid;//部门关联id
+    private String deptname;//业务字段
 
     public String getUserid() {
         return userid;
@@ -116,9 +118,25 @@ public class User {
         this.pwd = pwd;
     }
 
+    public String getDeptid() {
+        return deptid;
+    }
+
+    public void setDeptid(String deptid) {
+        this.deptid = deptid;
+    }
+
+    public String getDeptname() {
+        return deptname;
+    }
+
+    public void setDeptname(String deptname) {
+        this.deptname = deptname;
+    }
+
     @Override
     public String toString() {
-        return "user{" +
+        return "User{" +
                 "userid='" + userid + '\'' +
                 ", username='" + username + '\'' +
                 ", usersex=" + usersex +
@@ -131,6 +149,8 @@ public class User {
                 ", qiyeweixinhao='" + qiyeweixinhao + '\'' +
                 ", userimg='" + userimg + '\'' +
                 ", pwd='" + pwd + '\'' +
+                ", deptid='" + deptid + '\'' +
+                ", deptname='" + deptname + '\'' +
                 '}';
     }
 }
