@@ -1,7 +1,8 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>我的假期</title>
+    <title>在岗状态</title>
     <script src="<%=request.getContextPath()%>/js/jquery-1.11.3.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap3/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap3/css/bootstrap.css">
@@ -13,35 +14,32 @@
     <script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <!-- dialog -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/css/bootstrap-dialog.css">
-    <script type="text/javascript"
-            src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/css/bootstrap-dialog.css" >
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
 
-<table id="myHoliday"></table>
+<table id="onTheJobStatusbg"></table>
 
 <script type="text/javascript">
 
     $(function () {
-        queryMyHoliday();
+        queryOnTheJobStatus();
     });
 
-    function queryyinronger3() {
-        queryMyHoliday();
-        $('#myHoliday').bootstrapTable('refresh');
+    function queryyinronger9() {
+        queryOnTheJobStatus();
+        $('#onTheJobStatusbg').bootstrapTable('refresh');
     }
 
     function search_list() {
-        $('#myHoliday').bootstrapTable("refresh", {offset: 1})
+        $("#onTheJobStatusbg").bootstrapTable("refresh", {offset: 1})
     }
 
-    function queryMyHoliday() {
-//        var date = $('.datepicker').datepicker('setDate', new Date());
-//        alert(date);
-        $('#myHoliday').bootstrapTable({
-            url: '<%=request.getContextPath()%>/yreController/queryMyHoliday',
+    function queryOnTheJobStatus() {
+        $('#onTheJobStatusbg').bootstrapTable({
+            url: '<%=request.getContextPath()%>/yreController/queryOnTheJobStatus',
             method: "post",
             pagination: true,		   //开启分页
             pageNumber: 1,              //初始化加载第几页,默认第1页
@@ -60,26 +58,11 @@
             striped: true,
             columns: [
                 {field: 'username', title: '姓名', width: 200},
-                {field: 'nianjia', title: '年假', width: 200,
-                    formatter:function (value,row,index) {
-                        return "w";
-                    }
-                },
-                {field: 'yixiunianjia', title: '已休年假', width: 200,
-                    formatter:function (value,row,index) {
-                        return "w";
-                    }
-                },
-                {field: 'weixiunianjia', title: '未休年假', width: 200,
-                    formatter:function (value,row,index) {
-                        return "w";
-                    }
-                },
-                {field: 'shengyutiaoxiushijian', title: '剩余调休小时', width: 200,
-                    formatter:function (value,row,index) {
-                        return "w";
-                    }
-                },
+                {field: 'deptname', title: '所属部门', width: 200},
+                {field: 'amshangban', title: '上班', width: 200},
+                {field: 'amxiaban', title: '下班', width: 200},
+                {field: 'pmshangban', title: '上班', width: 200},
+                {field: 'pmxiaban', title: '下班', width: 200},
             ]
         });
     }

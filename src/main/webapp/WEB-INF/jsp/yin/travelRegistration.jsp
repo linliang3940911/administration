@@ -100,7 +100,6 @@
             sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
             striped:true,
             columns:[
-                {field:'userchek',checkbox:true},
                 {field:'shengqingtime',title:'申请时间',width:200},
                 {field:'kaishitime',title:'开始时间',width:200},
                 {field:'jieshutime',title:'结束时间',width:200},

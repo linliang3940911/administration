@@ -13,7 +13,7 @@
                             <label>出差人：</label>
                       </td>
                       <td>
-                            <input type="text" value="超级管理员" readonly style="width:200px" class="form-control" >
+                            <input type="text" value="${loginUser.username}" readonly style="width:200px" class="form-control" >
                       </td>
                 </tr>
                 <tr>
@@ -45,9 +45,10 @@
                             <label>开始时间：</label>
                       </td>
                       <td>
-                          <input type="date" required ="required" name="kaishi" style="width:200px">
-                          &nbsp; 至结束时间 &nbsp;
-                          <input type="date" required ="required" name="jieshu" style="width:200px">
+                          <input type="datetime-local" required ="required" name="kaishi" style="width:200px">
+                          至结束时间
+                          <input type="datetime-local" required ="required" name="jieshu" style="width:200px">
+                          <br>
                           共天数<input type="text" value="2" readonly style="width:50px" class="form-control" >天
                       </td>
                 </tr>

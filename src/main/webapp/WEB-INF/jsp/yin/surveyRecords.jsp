@@ -20,27 +20,76 @@
 </head>
 <body>
 
-<table id="mySchedule"></table>
+<div class="container-fluid">
+    <input type="hidden"  id="workType">
 
+    <div class="row">
+        <!-- 左边功能区 -->
+        <div class="col-md-2">
+            <div  style="background-color: #EBEBEB;height:40px"><h4>部门列表</h4>
+            </div>
+            <div id="myTree"  class="panel-body"></div>
+        </div>
+
+        <!-- 右边功能区 -->
+
+        <div class="col-md-10">
+            <ul class="nav nav-tabs" id="tablist">
+                <li role="presentation" class="active">
+
+                </li>
+            </ul>
+
+            <!-- 选项卡下内容 -->
+            <div class="tab-content">
+
+                <div role="tabpanel"class="tab-pane active"id="home">
+                    <div  style="background-color: #EBEBEB;height:40px">
+                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('考勤记录','jumpController/toMyAttendance')">考勤记录</button>
+                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('请假记录','jumpController/addwork')">请假记录</button>
+                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('考勤原始记录','jumpController/addwork')">考勤原始记录</button>
+                    </div>
+                    <div id="myAttendance"></div>
+                    <div id="leaveRegistration"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 <script type="text/javascript">
+    $.ajax({
+        url:"<%=request.getContextPath()%>/yreController/queryDeptTree",
+        type:"post",
+        success:function(date){
+            $("#myTree").treeview({
+                data:date,
+                onNodeSelected:function(event, node) {
+                    $("#workType").val(node.url)
+                    $("#myAttendance").bootstrapTable("refresh",{offset:1})
+                }
+            })
+        }
+    })
 
     $(function () {
-        queryMySchedule();
+        queryMyAttendance();
     });
 
-    function queryyinronger2() {
-        queryMySchedule();
-        $('#mySchedule').bootstrapTable('refresh');
+    function queryyinronger4() {
+        queryMyAttendance();
+        $('#myAttendance').bootstrapTable('refresh');
     }
 
     function search_list() {
-        $("#mySchedule").bootstrapTable("refresh", {offset: 1})
+        $("#myAttendance").bootstrapTable("refresh", {offset: 1})
     }
 
-    function queryMySchedule() {
-       /* var date = $('.datepicker').datepicker('setDate', new Date());*/
-        /*alert(date);*/
-        $('#mySchedule').bootstrapTable({
+    function queryMyAttendance() {
+        /* var date = $('.datepicker').datepicker('setDate', new Date());
+         alert(date);*/
+        $('#myAttendance').bootstrapTable({
             url: '<%=request.getContextPath()%>/yreController/queryMySchedule',
             method: "post",
             pagination: true,		   //开启分页
@@ -59,13 +108,12 @@
             sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
             striped: true,
             columns: [
-                {field: 'username', title: '姓名', width: 200},
                 {field: 'paibanriqi', title: '日期', width: 200},
-                {field: 'banciname', title: '班次', width: 200},
                 {field: 'amshangban', title: '上班', width: 200},
                 {field: 'amxiaban', title: '下班', width: 200},
                 {field: 'pmshangban', title: '上班', width: 200},
                 {field: 'pmxiaban', title: '下班', width: 200},
+                {field: 'remarks', title: '备注', width: 200},
             ]
         });
     }

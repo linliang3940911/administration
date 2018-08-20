@@ -75,7 +75,6 @@
                 sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
                 striped:true,
                 columns:[
-                    {field:'userchek',checkbox:true},
                     {field:'banci',title:'班次',width:200},
                     {field:'dengjitype',title:'登记类型',width:200},
                     {field:'settime',title:'规定时间',width:200},

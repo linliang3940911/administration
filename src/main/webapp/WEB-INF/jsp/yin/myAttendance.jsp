@@ -59,7 +59,6 @@
                 sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
                 striped: true,
                 columns: [
-                    {field: 'userchek', checkbox: true},
                     {field: 'paibanriqi', title: '日期', width: 200},
                     {field: 'amshangban', title: '上班', width: 200},
                     {field: 'amxiaban', title: '下班', width: 200},
