@@ -196,16 +196,15 @@ public class ModelController {
     */
     @RequestMapping("/addshenqingliycheng")
     @ResponseBody
-    public  Integer  addshenqingliycheng(String woid,Integer proceType,HttpServletRequest request){
+    public  Integer  addshenqingliycheng(String woid,Integer proceType,HttpServletRequest request,String  dengji){
         ShenQing shenQing = new ShenQing();
         shenQing.setProceType(proceType);
-
-
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("loginUser");
         WorkName workName= ModelService.addshenqingliycheng(woid);
-        shenQing.setProcerole(workName.getWorkType());
-        ModelService.addshenqingliychengs(shenQing,user.getUsername());
+        shenQing.setProcerole(workName.getConditio());
+        ModelService.addshenqingliychengs(shenQing,user.getUsername(),user.getUserid(),woid);
+        System.out.println(dengji);
         return  1;
     }
 
