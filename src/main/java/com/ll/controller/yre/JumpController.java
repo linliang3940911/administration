@@ -136,5 +136,76 @@ public class JumpController {
         return "yin/addTravelRegistration";
     }
 
+    @RequestMapping("toOperationLog")
+    public String toOperationLog(){
+        return "yin/operationLog";
+    }
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags} 
+    　　* @return ${return_type} 
+    　　* @throws 去考勤机记录kaoQinJiJiLu.jsp页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/17 15:43 
+    　　*/
+    @RequestMapping("toKaoQinJiJiLu")
+    public String toKaoQinJiJiLu(){
+        return "yin/kaoQinJiJiLu";
+    }
+
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags} 
+    　　* @return ${return_type} 
+    　　* @throws  去surveyRecords.jsp 查询记录
+    　　* @author 因蓉儿
+    　　* @date 2018/8/18 15:13
+    　　*/
+    @RequestMapping("toSurveyRecords")
+    public String toSurveyRecords(){
+        return "yin/surveyRecords";
+    }
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags}
+    　　* @return ${return_type}
+    　　* @throws  去 onTheJobStatus.jsp 在岗状态页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/18 18:11
+    　　*/
+    @RequestMapping("toOnTheJobStatus")
+    public String toOnTheJobStatus(){
+        return "yin/onTheJobStatus";
+    }
+
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags}
+    　　* @return ${return_type}
+    　　* @throws  去考勤统计 attendanceStatistics.jsp 页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/18 19:11
+    　　*/
+    @RequestMapping("toAttendanceStatistics")
+    public String toAttendanceStatistics(){
+        return "yin/attendanceStatistics";
+    }
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags}
+    　　* @return ${return_type}
+    　　* @throws 去 attendanceSetting.jsp 考勤设置页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/18 21:44
+    　　*/
+    @RequestMapping("toAttendanceSetting")
+    public String toAttendanceSetting(){
+        return "yin/attendanceSetting";
+    }
 
 }
