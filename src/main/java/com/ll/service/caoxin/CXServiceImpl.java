@@ -1,10 +1,14 @@
 package com.ll.service.caoxin;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ll.dao.caoxin.IcxDao;
 import com.ll.pojo.caoxin.Caogao;
 import com.ll.pojo.caoxin.User;
 import com.ll.pojo.caoxin.WoDeProject;
+import com.ll.pojo.lin.Procedures;
 import com.ll.pojo.lin.ShenQing;
+import com.ll.pojo.lin.WorkTree;
 import com.ll.util.OSSClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +58,97 @@ public class CXServiceImpl implements CXService {
     @Override
     public void updateProce(String proceid) {
         cxdao.updateProce(proceid);
+    }
+
+    @Override
+    public ShenQing xiangqing(String proceid) {
+        return cxdao.xiangqing(proceid);
+    }
+
+    @Override
+    public ShenQing tongguo(String proceid){
+       return cxdao.tongguo(proceid);
+    }
+
+
+
+    @Override
+    public List<ShenQing> queryShenqing() {
+        return   cxdao.queryShenqing();
+    }
+
+    @Override
+    public List<ShenQing> queryCaoGao() {
+        return cxdao.queryCaoGao();
+    }
+
+    @Override
+    public void updatebohui(ShenQing shen) {
+       String  str = shen.getShenhetongguo();
+       shen.setProcerole(str+","+shen.getProcerole());
+       shen.setShenhetongguo(" ");
+       cxdao.updatebohui(shen);
+    }
+
+    @Override
+    public List<Procedures> queryrole() {
+        return cxdao.queryrole();
+    }
+    @Override
+    public void updatepro(ShenQing shen2){
+        String pro = shen2.getProcerole();
+        String[] split = pro.split(",");
+        String str="";
+        if(pro.indexOf(",")!=-1){
+            for (int i = 0; i < split.length; i++) {
+                shen2.setShenhetongguo(split[0]);
+                if(i>0){
+                    str += ","+split[i];
+                }
+            }
+            str=str.substring(1);
+        }
+        System.out.println(str);
+        shen2.setProcerole(str);
+        cxdao.updatepro(shen2);
+    }
+
+
+    @Override
+    public void zhipairen(String zxc,ShenQing shen) {
+       String  pro = shen.getProcerole();
+        if(pro.indexOf(",") != -1){
+            String [] ss = pro.split(",");
+            for (int i = 0; i < ss.length; i++) {
+                shen.setProcerole(zxc+","+ss[i]);
+            }
+        }
+        if(pro.indexOf(",") == -1){
+            shen.setProcerole(zxc);
+        }
+        cxdao.updatePro(shen);
+    }
+
+    @Override
+    public List<WorkTree> queryListTree() {
+        return cxdao.queryListTree();
+    }
+
+    @Override
+    public List<ShenQing> queryLiuChang1() {
+        return cxdao.queryLiuChang1();
+    }
+    @Override
+    public List<ShenQing> queryLiuChang2() {
+        return cxdao.queryLiuChang2();
+    }
+    @Override
+    public List<ShenQing> queryLiuChang3() {
+        return cxdao.queryLiuChang3();
+    }
+    @Override
+    public List<ShenQing> queryLiuChang4() {
+        return cxdao.queryLiuChang4();
     }
 
     @Override
