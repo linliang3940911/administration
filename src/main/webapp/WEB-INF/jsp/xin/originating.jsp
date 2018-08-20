@@ -41,9 +41,25 @@
 <%--</button>--%>
 <%--<button class="btn btn-primary " onclick="xinzeng()" data-target="#myModal">新增数据</button>--%>
 <%--<button class="btn btn-primary " onclick="tiaozhuan()" data-target="#myModal">批量删除</button>--%>
+<button class="btn btn-primary "  data-dismiss="modal" aria-hidden="true" onclick="querydc()">导出</button>
 <div id="dividss"></div>
-
 <script type="text/javascript">
+    function querydc(){
+        $.ajax({
+            url : "<%=request.getContextPath()%>/caoxin/queryCaoGao",
+            type: "post",
+            success:function(){
+                alert("导出成功")
+            },
+            error:function(){
+                alert("导出失败")
+            },
+
+        })
+    }
+
+
+
     $(function(){
         querycharge();
     });
@@ -159,13 +175,11 @@
         <%--});--%>
     <%--}--%>
     function queryPhoneListById(proid){
-        alert(proid);
         $.ajax({
             url:"<%=request.getContextPath()%>/caoxin/updateProce",
             type:"post",
             data:{"proceid":proid},
             success:function(){
-                alert("成功");
                 $('#dividss').bootstrapTable('refresh');
             }
         })

@@ -20,7 +20,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
-<body background="<%=request.getContextPath()%>/login/images/02.gif">
+<body background="<%=request.getContextPath()%>/login/images/bg.jpg">
 <center>
     <h1 style="color: #03b6fd">办公管理系统登录</h1>
     <br>
@@ -38,7 +38,6 @@
 </center>
 <script type="text/javascript">
     function login(){
-
         $.ajax({
             url:"<%=request.getContextPath()%>/caoxin/queryUser",
             type:"post",
@@ -46,20 +45,12 @@
             dataType:"json",
             success:function(msg){
                 if(msg == '0'){
-                    $.messager.show({
-                        title:'提示',
-                        msg:'用户名不存在',
-                        timeout:2000,
-                        showType:'slide'
-                    });
-                } else if( msg == '1'){
-                    $.messager.show({
-                        title:'提示',
-                        msg:'密码错误',
-                        timeout:2000,
-                        showType:'slide'
-                    });
-                }else if(msg == '2'){//登录成功 直接跳转到首页
+                        alert("用户名不存在");
+                    }
+                    if( msg == '1'){
+                        alert("密码错误");
+                    }
+                    if(msg == '2'){//登录成功 直接跳转到首页
                     location.href="<%=request.getContextPath()%>/modle/queryHomePage"
                 }
             },
