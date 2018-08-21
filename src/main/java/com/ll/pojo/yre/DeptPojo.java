@@ -1,11 +1,14 @@
 package com.ll.pojo.yre;
 
+import java.util.List;
+
 public class DeptPojo {
 
     private String deptid;//
     private String deptname;//
     private String deptpid;//
     private String url;//
+    private List<DeptPojo> nodes;
 
     public String getDeptid() {
         return deptid;
@@ -37,5 +40,24 @@ public class DeptPojo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public List<DeptPojo> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<DeptPojo> nodes) {
+        this.nodes = nodes;
+    }
+
+    @Override
+    public String toString() {
+        return "DeptPojo{" +
+                "deptid='" + deptid + '\'' +
+                ", deptname='" + deptname + '\'' +
+                ", deptpid='" + deptpid + '\'' +
+                ", url='" + url + '\'' +
+                ", nodes=" + nodes +
+                '}';
     }
 }
