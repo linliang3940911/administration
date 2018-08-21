@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>我的排位表</title>
+    <title>考勤记录</title>
     <script src="<%=request.getContextPath()%>/js/jquery-1.11.3.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap3/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap3/css/bootstrap.css">
@@ -22,7 +22,6 @@
 
 <div class="container-fluid">
     <input type="hidden"  id="workType">
-
     <div class="row">
         <!-- 左边功能区 -->
         <div class="col-md-2">
@@ -30,65 +29,46 @@
             </div>
             <div id="myTree"  class="panel-body"></div>
         </div>
-
         <!-- 右边功能区 -->
-
         <div class="col-md-10">
             <ul class="nav nav-tabs" id="tablist">
                 <li role="presentation" class="active">
-
                 </li>
             </ul>
-
             <!-- 选项卡下内容 -->
             <div class="tab-content">
-
                 <div role="tabpanel"class="tab-pane active"id="home">
                     <div  style="background-color: #EBEBEB;height:40px">
-                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('考勤记录','jumpController/toMyAttendance')">考勤记录</button>
-                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('请假记录','jumpController/addwork')">请假记录</button>
-                        <button type="button" class="btn btn-success"  onclick="tiaozhuan('考勤原始记录','jumpController/addwork')">考勤原始记录</button>
+                        <button type="button" class="btn btn-success"  onclick="kaoqinjilu('考勤记录','jumpController/toMyAttendance')">考勤记录</button>
                     </div>
                     <div id="myAttendance"></div>
-                    <div id="leaveRegistration"></div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
-<script type="text/javascript">
-    $.ajax({
-        url:"<%=request.getContextPath()%>/yreController/queryDeptTree",
-        type:"post",
-        success:function(date){
-            $("#myTree").treeview({
-                data:date,
-                onNodeSelected:function(event, node) {
-                    $("#workType").val(node.url)
-                    $("#myAttendance").bootstrapTable("refresh",{offset:1})
-                }
-            })
-        }
-    })
 
+<script type="text/javascript">
+    function queryDeptTree() {
+        $.ajax({
+            url:"<%=request.getContextPath()%>/yreController/queryDeptTree",
+            type:"post",
+            success:function(date){
+                $("#myTree").treeview({
+                    data:date,
+                    onNodeSelected:function(event, node) {
+                        $("#workType").val(node.url)
+                        $("#myAttendance").bootstrapTable("refresh",{offset:1})
+                    }
+                })
+            }
+        })
+    }
     $(function () {
+        queryDeptTree();
         queryMyAttendance();
     });
-
-    function queryyinronger4() {
-        queryMyAttendance();
-        $('#myAttendance').bootstrapTable('refresh');
-    }
-
-    function search_list() {
-        $("#myAttendance").bootstrapTable("refresh", {offset: 1})
-    }
-
     function queryMyAttendance() {
-        /* var date = $('.datepicker').datepicker('setDate', new Date());
-         alert(date);*/
         $('#myAttendance').bootstrapTable({
             url: '<%=request.getContextPath()%>/yreController/queryMySchedule',
             method: "post",
@@ -107,7 +87,13 @@
             contentType: "application/x-www-form-urlencoded;charset=UTF-8",	//必须的否则条件查询时会乱码
             sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
             striped: true,
+            queryParams:function(params) {
+                var url= $("#workType").val()
+                params.url=url;
+                return params;
+            },
             columns: [
+                {field:'checkse',checkbox:true},
                 {field: 'paibanriqi', title: '日期', width: 200},
                 {field: 'amshangban', title: '上班', width: 200},
                 {field: 'amxiaban', title: '下班', width: 200},

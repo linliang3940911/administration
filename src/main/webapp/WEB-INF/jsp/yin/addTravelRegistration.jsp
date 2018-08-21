@@ -5,7 +5,7 @@
 </head>
 <body>
 <center>
-<strong>员工加班单</strong>
+<strong>员工出差单</strong>
     <form id="addTravelRegistrationssss">
           <table border="1" bgcolor="blue">
                 <tr>

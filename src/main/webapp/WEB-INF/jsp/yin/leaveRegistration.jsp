@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>加班登记</title>
+    <title>请假登记</title>
     <script src="<%=request.getContextPath()%>/js/jquery-1.11.3.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap3/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap3/css/bootstrap.css">
@@ -42,7 +42,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <strong>员工加班单:</strong>
+                <strong>员工请假单:</strong>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
 
@@ -59,30 +59,30 @@
 
 <br>
 
-<button type="button" class="btn btn-primary" data-toggle='modal' data-target='#myModal2' onclick="toAddOvertimeRegistration()">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加登记
+<button type="button" class="btn btn-primary" data-toggle='modal' data-target='#myModal2' onclick="toAddLeaveRegistration()">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>请假登记
 </button>
 
-<table id="overtimeRegistrationbg"></table>
+<table id="leaveRegistration"></table>
 
 <script type="text/javascript">
 
     $(function(){
-        queryOvertimeRegistration();
+        queryLeaveRegistration();
     });
-    function queryyinronger6(){
-        queryOvertimeRegistration();
-        $('#overtimeRegistrationbg').bootstrapTable('refresh');
+    function queryyinronger16(){
+        queryLeaveRegistration();
+        $('#leaveRegistration').bootstrapTable('refresh');
     }
 
     function search_list(){
-        $("#overtimeRegistrationbg").bootstrapTable("refresh",{offset:1})
+        $("#leaveRegistration").bootstrapTable("refresh",{offset:1})
     }
 
-    function queryOvertimeRegistration(){
+    function queryLeaveRegistration(){
 
-        $('#overtimeRegistrationbg').bootstrapTable({
-            url:'<%=request.getContextPath()%>/yreController/queryOvertimeRegistration',
+        $('#leaveRegistration').bootstrapTable({
+            url:'<%=request.getContextPath()%>/yreController/queryLeaveRegistration',
             method: "post",
             pagination: true,		   //开启分页
             pageNumber:1,              //初始化加载第几页,默认第1页
@@ -104,60 +104,55 @@
                 {field:'shenqingtime',title:'申请时间',width:200},
                 {field:'kaishitime',title:'开始时间',width:200},
                 {field:'jieshutime',title:'结束时间',width:200},
-                {field:'jiabantime',title:'加班时长(小时)',width:200,
+                {field:'qingjiatianshu',title:'请假天数',width:200},
+                {field:'qingjiayuanyin',title:'请假原因(点击查看详细)',width:200,
                     formatter:function (value,row,index) {
-                        return "5小时";
-                    }
-                },
-                {field:'jiabanyuanyinaa',title:'加班原因(点击查看详细)',width:200,
-                    formatter:function (value,row,index) {
-                            return "<button  class=\'btn btn-primary \' onclick='queryXiangQing()'  data-toggle=\'modal\' data-target=\'#myModal\'>"+row.jiabanyuanyin+"</button>";
+                        return "<button  class=\'btn btn-primary \' onclick='queryQingJiaXiangQing()'  data-toggle=\'modal\' data-target=\'#myModal\'>"+row.qingjiayuanyin+"</button>";
                     }
                 }
             ]
         });
     }
 
-   function queryXiangQing() {
-        var jiabanids = $("#overtimeRegistrationbg").bootstrapTable('getSelections');
-        var jiabanid="";
-        for (var i = 0; i < jiabanids.length; i++) {
-            jiabanid=jiabanids[i].jiabanid;
+    function queryQingJiaXiangQing() {
+        var qingjiaids = $("#leaveRegistration").bootstrapTable('getSelections');
+        var qingjiaid="";
+        for (var i = 0; i < qingjiaids.length; i++) {
+            qingjiaid=qingjiaids[i].qingjiaid;
         }
         $.ajax({
-            url:"<%=request.getContextPath()%>/yreController/queryxiangqing?jiabanid="+jiabanid,
+            url:"<%=request.getContextPath()%>/yreController/queryQingJiaXiangQing?qingjiaid="+qingjiaid,
             type:"post",
             success:function(result){
                 $("#span-id").html(result);
             }
         });
     }
-    
-    function toAddOvertimeRegistration(){
+
+    function toAddLeaveRegistration(){
         $.ajax({
-            url: '<%=request.getContextPath()%>/jumpController/toAddOvertimeRegistration',
+            url: '<%=request.getContextPath()%>/jumpController/toAddLeaveRegistration',
             type:"post",
             success:function(result){
                 $("#span-id3").html(result) ;
-                $("#span-id4").html('<button type="button" class="btn btn-primary" onclick="addOvertimeRegistration()">提交</button>')
+                $("#span-id4").html('<button type="button" class="btn btn-primary" onclick="addLeaveRegistration()">提交</button>')
             }
         });
     }
 
-    function addOvertimeRegistration(){
+    function addLeaveRegistration(){
         $.ajax({
-            url:"<%=request.getContextPath()%>/yreController/addOvertimeRegistration",
-            data:$("#addOvertimeRegistration").serialize(),
+            url:"<%=request.getContextPath()%>/yreController/addLeaveRegistration",
+            data:$("#addLeaveRegistration").serialize(),
             type:"post",
             success:function(result){
                 if(result ==1 ){
                     $('#myModal2').modal('hide');
-                    $('#overtimeRegistrationbg').bootstrapTable('refresh');
+                    $('#leaveRegistration').bootstrapTable('refresh');
                 }
             }
         });
     }
-
 </script>
 
 

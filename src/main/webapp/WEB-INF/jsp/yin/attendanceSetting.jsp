@@ -13,13 +13,49 @@
     <script src="<%=request.getContextPath()%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
     <!-- dialog -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/css/bootstrap-dialog.css" >
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/css/bootstrap-dialog.css">
+    <script type="text/javascript"
+            src="<%=request.getContextPath()%>/js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
 
-<table id="attendancesetting"></table>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- 右边功能区 -->
+        <div>
+            <div class="col-lg-2">
+                <ul class="nav nav-tabs" id="tablist">
+                    <li class="list-group-item" style="background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>班次
+                    </li>
+                    <li class="list-group-item" style="background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>班制
+                    </li>
+                    <li class="list-group-item" style="background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>班组
+                    </li>
+                    <li class="list-group-item" style="background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>考勤设置
+                    </li>
+                    <li class="list-group-item" style="background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>锁定排班
+                    </li>
+                    <li class="list-group-item" style=" background: #f5f8ff;width:150px;">
+                        <span class="icon expand-icon"></span><span class="icon node-icon"></span>考勤登录提醒
+                    </li>
+                </ul>
+            </div>
+            <!-- 选项卡下内容 -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active"id="home">
+                    <div id="attendancesetting"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -61,26 +97,29 @@
                 {field: 'amxiabantime', title: '下班时间', width: 200},
                 {field: 'pmshangbantime', title: '上班时间', width: 200},
                 {field: 'pmxiabantime', title: '下班时间', width: 200},
-                {field: 'vacationstate', title: '是否设为休假', width: 200,
-                    formatter:function (value,rows,index) {
-                        if(value == 1){
+                {
+                    field: 'vacationstate', title: '是否设为休假', width: 200,
+                    formatter: function (value, rows, index) {
+                        if (value == 1) {
                             return "是";
-                        }else{
+                        } else {
                             return "否";
                         }
                     }
                 },
-                {field: 'takeeffectstate', title: '是否生效', width: 200,
-                    formatter:function (value,rows,index) {
-                        if(value == 1){
+                {
+                    field: 'takeeffectstate', title: '是否生效', width: 200,
+                    formatter: function (value, rows, index) {
+                        if (value == 1) {
                             return "是";
-                        }else{
+                        } else {
                             return "否";
                         }
                     }
                 },
-                {field: 'caozuo1', title: '操作', width: 200,
-                    formatter:function (value,rows,index) {
+                {
+                    field: 'caozuo1', title: '操作', width: 200,
+                    formatter: function (value, rows, index) {
                         return "<button  class='btn btn-primary ' onclick='updateKaoQinShiJan()'  data-toggle='modal' data-target='#myModal'>编辑</button>"
                     }
                 }

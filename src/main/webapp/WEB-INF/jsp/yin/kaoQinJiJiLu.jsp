@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>加班登记</title>
+    <title>考勤记录查看</title>
     <script src="<%=request.getContextPath()%>/js/jquery-1.11.3.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap3/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap3/css/bootstrap.css">
@@ -18,10 +18,6 @@
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
-
-<%--<button type="button" class="btn btn-primary" data-toggle='modal' data-target='#myModal2' onclick="toAddOvertimeRegistration()">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加登记
-</button>--%>
 
 <table id="kaoqinjijilubg"></table>
 
