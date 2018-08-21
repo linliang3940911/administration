@@ -22,13 +22,13 @@ public class ShenQing {
     private String  proceuser;//申请人
     private Integer proceType;//申请人类型
     private String  shenhetongguo;
-    //关联字段
+
+    private String   zhipairole;//指派人
+    // 关联字段
     private String  userid;
     private  String  woid;
-
-
     //业务字段
-    private String roletext; //申请的审核人
+    private String roletext; //申请的审核人roletext
     private  String  woname;
     private  Integer  dengji;
 
@@ -80,6 +80,14 @@ public class ShenQing {
         this.shenhetongguo = shenhetongguo;
     }
 
+    public String getZhipairole() {
+        return zhipairole;
+    }
+
+    public void setZhipairole(String zhipairole) {
+        this.zhipairole = zhipairole;
+    }
+
     public String getUserid() {
         return userid;
     }
@@ -129,6 +137,7 @@ public class ShenQing {
                 ", proceuser='" + proceuser + '\'' +
                 ", proceType=" + proceType +
                 ", shenhetongguo='" + shenhetongguo + '\'' +
+                ", zhipairole='" + zhipairole + '\'' +
                 ", userid='" + userid + '\'' +
                 ", woid='" + woid + '\'' +
                 ", roletext='" + roletext + '\'' +
