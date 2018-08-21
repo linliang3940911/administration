@@ -5,23 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.ll.dao.yre.YreMapper;
 import com.ll.pojo.caoxin.User;
 import com.ll.pojo.yre.*;
-import org.apache.catalina.filters.RequestFilter;
-import org.apache.http.HttpRequest;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -103,15 +94,17 @@ public class YreServiceImpl implements IYreService{
     }
 
     @Override
-    public void addOvertimeRegistration(JiaBan jiaBan) {
+    public void addOvertimeRegistration(JiaBan jiaBan, HttpServletRequest request) {
 
         //UUID
         String jiaBanid = UUID.randomUUID().toString();
         jiaBan.setJiabanid(jiaBanid);
 
-        //登记人（超级管理员）
-        jiaBan.setUserid("4");
-
+        //当前登记人
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        String userid = user.getUserid();
+        jiaBan.setUserid(userid);//当前登记人
         //申请时间为当前系统时间
         Date date = new Date();
         jiaBan.setShenqingtime(date);
@@ -137,11 +130,17 @@ public class YreServiceImpl implements IYreService{
     }
 
     @Override
-    public void addTravelRegistration(Travel travel) {
+    public void addTravelRegistration(Travel travel, HttpServletRequest request) {
 
         String travelid = UUID.randomUUID().toString();
         travel.setTravelid(travelid);
-        travel.setUserid("4");
+
+        //当前登录人
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        String userid = user.getUserid();
+        travel.setUserid(userid);//当前登录人
+
         Date date = new Date();
         travel.setShengqingtime(date);
         yreMapper.addTravelRegistration(travel);
@@ -201,8 +200,9 @@ public class YreServiceImpl implements IYreService{
     }
 
     @Override
-    public List<DeptPojo> queryDeptTree() {
-        return yreMapper.queryDeptTree();
+    public List<DeptPojo> queryDeptTree(String id) {
+        List<DeptPojo>  list= yreMapper.queryDeptTree(id);
+        return list;
     }
 
     @Override
@@ -233,6 +233,39 @@ public class YreServiceImpl implements IYreService{
         json.put("total", count);
         json.put("rows", attendancesettingList);
         return json;
+    }
+
+    @Override
+    public JSONObject queryLeaveRegistration(Integer page, Integer rows, QingJia qingJia) {
+        Long count = yreMapper.queryLeaveRegistrationCount(qingJia);
+        List<QingJia> qingjiaList = yreMapper.queryLeaveRegistrationPage(page,rows,qingJia);
+        JSONObject json = new JSONObject();
+        json.put("total", count);
+        json.put("rows", qingjiaList);
+        return json;
+    }
+
+    @Override
+    public QingJia queryQingJiaXiangQing(String qingjiaid) {
+        return yreMapper.queryQingJiaXiangQing(qingjiaid);
+    }
+
+    @Override
+    public void addLeaveRegistration(QingJia qingJia, HttpServletRequest request) {
+
+        //请假id
+        String qingjiaid = UUID.randomUUID().toString();
+        Date date = new Date();
+        qingJia.setQingjiaid(qingjiaid);//请假id uuid
+        qingJia.setShenqingtime(date);//申请时间当前系统时间
+
+        //当前登录人
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        String userid = user.getUserid();
+        qingJia.setUserid(userid);//当前登录人
+
+        yreMapper.addLeaveRegistration(qingJia);
     }
 }
 
