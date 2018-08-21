@@ -208,4 +208,29 @@ public class JumpController {
         return "yin/attendanceSetting";
     }
 
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags} 
+    　　* @return ${return_type} 
+    　　* @throws  去请假登记页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/20 21:07 
+    　　*/
+    @RequestMapping("toLeaveRegistration")
+    public String toLeaveRegistration(){
+        return "yin/leaveRegistration";
+    }
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags}
+    　　* @return ${return_type}
+    　　* @throws 去添加请假登记页面
+    　　* @author 因蓉儿
+    　　* @date 2018/8/20 21:22
+    　　*/
+    @RequestMapping("toAddLeaveRegistration")
+    public String toAddLeaveRegistration(){
+        return "yin/addLeaveRegistration";
+    }
+
 }
