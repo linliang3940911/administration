@@ -75,14 +75,22 @@ public class CaoController {
     }
     @RequestMapping(value = "/queryCaogao")
     @ResponseBody
-    public JSONObject queryCaogao(ShenQing shengqing, Integer offset, Integer limit){
+    public JSONObject queryCaogao(Integer offset, Integer limit,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
         JSONObject json =new JSONObject();
-        Long count =cxService.tctota(shengqing);
-        List<ShenQing> user= new ArrayList<ShenQing>();
-        user=cxService.queryCaogao(shengqing,offset,limit);
+        Long count =cxService.tctota(user.getUserid());
+        List<ShenQing> list=cxService.queryCaogao(offset,limit,user.getUserid());
         json.put("total", count);
-        json.put("rows",user);
+        json.put("rows",list);
         return  json;
+
+
+
+
+
+
+
     }
 
     @RequestMapping(value = "/updateProce")
@@ -102,24 +110,16 @@ public class CaoController {
 
     @RequestMapping(value = "/queryshen")
     @ResponseBody
-    public JSONObject queryshen(ShenQing shengqing, Integer offset, Integer limit){
+    public JSONObject queryshen( Integer offset, Integer limit,HttpServletRequest request){
         JSONObject json =new JSONObject();
-        Long count =cxService.tctotas(shengqing);
-        List<ShenQing> user= new ArrayList<ShenQing>();
-        user=cxService.queryshen(shengqing,offset,limit);
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        String userid=user.getUserid();
+        Long count =cxService.tctotas(userid);
+        List<ShenQing> list=cxService.queryshen(offset,limit,userid);
         json.put("total", count);
-        json.put("rows",user);
+        json.put("rows",list);
         return  json;
-    }
-
-
-
-    //草稿箱  批删
-    @RequestMapping(value = "/deleteCaogao")
-    @ResponseBody
-    public String deleteCaogao(String ids){
-         cxService.deleteCaogao(ids);
-         return "1";
     }
     //新增
     @RequestMapping(value = "/insertorig")
@@ -273,10 +273,13 @@ public class CaoController {
         cxService.updatepro(shen);
         return  "success";
     }
-    @RequestMapping("bohui")
+    @RequestMapping("/bohui")
     @ResponseBody
     public String  bohui(String  proceid){
         ShenQing shen = cxService.tongguo(proceid);
+        if(shen.getShenhetongguo().equals("")){
+            return  "susecc";
+        }
         cxService.updatebohui(shen);
         return  "susecc";
     }
@@ -288,7 +291,6 @@ public class CaoController {
     @ResponseBody
     public String DataService(HttpServletResponse  response) {
         List<ShenQing> list1 = cxService.queryShenqing();
-
         String path="E:\\qytjdy.xls";
         try {
             String title="申请表";
@@ -296,7 +298,6 @@ public class CaoController {
             System.err.println(list1);
             List<Object[]> arrobj =new ArrayList<Object[]>();
             Object[] objs =null;
-
             for (int i = 0; i < list1.size(); i++) {
                 ShenQing qy= new ShenQing();
                 qy=list1.get(i);
@@ -306,7 +307,6 @@ public class CaoController {
                 objs[2]=qy.getProceid();
                 objs[3]=qy.getProcedate();
                 objs[4]=qy.getRoletext();
-
                 arrobj.add(objs);
             }
             ExportExcel export=new ExportExcel(title,rowname,arrobj,path,response);
@@ -323,7 +323,6 @@ public class CaoController {
     @ResponseBody
     public String queryCaoGao(HttpServletResponse  response) {
         List<ShenQing> list1 = cxService.queryCaoGao();
-
         String path="E:\\caogao.xls";
         try {
             String title="草稿表";
@@ -356,6 +355,14 @@ public class CaoController {
         model.addAttribute("shen",shen);
         return "xin/role";
     }
+    @RequestMapping("/queryLiu")
+    public  String  queryLiu(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        List<ShenQing> list1 = cxService.queryLiu(user.getUserid());
+        model.addAttribute("list",list1);
+        return "index";
+    }
     @RequestMapping("/zhipairen")
     @ResponseBody
     public   String  zhipairen(String  zxc,String proceid){
@@ -373,26 +380,54 @@ public class CaoController {
 
     @RequestMapping("/queryLiuChang1")
     @ResponseBody
-    public  List<ShenQing>  queryLiuChang1(){
-        List<ShenQing> listTree=cxService.queryLiuChang1();
+    public  List<ShenQing>  queryLiuChang1(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        List<ShenQing> listTree=cxService.queryLiuChang1(user.getUserid());
         return  listTree;
     }
     @RequestMapping("/queryLiuChang2")
     @ResponseBody
-    public  List<ShenQing>  queryLiuChang2(){
-        List<ShenQing> listTree=cxService.queryLiuChang2();
+    public  List<ShenQing>  queryLiuChang2(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        List<ShenQing> listTree=cxService.queryLiuChang2(user.getUserid());
         return  listTree;
     }
     @RequestMapping("/queryLiuChang3")
     @ResponseBody
-    public  List<ShenQing>  queryLiuChang3(){
-        List<ShenQing> listTree=cxService.queryLiuChang3();
+    public  List<ShenQing>  queryLiuChang3(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        List<ShenQing> listTree=cxService.queryLiuChang3(user.getUserid());
         return  listTree;
     }
     @RequestMapping("/queryLiuChang4")
     @ResponseBody
-    public  List<ShenQing>  queryLiuChang4(){
-        List<ShenQing> listTree=cxService.queryLiuChang4();
+    public  List<ShenQing>  queryLiuChang4(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        List<ShenQing> listTree=cxService.queryLiuChang4(user.getUserid());
         return  listTree;
+    }
+    @RequestMapping("/jinji")
+    public  String   jinji(){
+        return "xin/jinji";
+    }
+    @RequestMapping("/zhongyao")
+    public  String   zhongyao(){
+        return "xin/zhongyao";
+    }
+    @RequestMapping("/putong")
+    public  String   putong(){
+        return "xin/putong";
+    }
+    @RequestMapping("/qita")
+    public  String   qita(){
+        return "xin/qita";
+    }
+    @RequestMapping("/daiban")
+    public  String  daiban(){
+        return "xin/daiban";
     }
 }
