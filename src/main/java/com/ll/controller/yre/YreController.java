@@ -3,6 +3,7 @@ package com.ll.controller.yre;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ll.pojo.caoxin.User;
+import com.ll.pojo.lin.WorkTree;
 import com.ll.pojo.yre.*;
 import com.ll.service.yre.IYreService;
 import org.springframework.stereotype.Controller;
@@ -138,8 +139,8 @@ public class YreController {
      　　*/
     @RequestMapping("addOvertimeRegistration")
     @ResponseBody
-    public Integer addOvertimeRegistration(JiaBan jiaBan){
-        yreService.addOvertimeRegistration(jiaBan);
+    public Integer addOvertimeRegistration(JiaBan jiaBan,HttpServletRequest request){
+        yreService.addOvertimeRegistration(jiaBan,request);
         return 1;
     }
 
@@ -184,8 +185,8 @@ public class YreController {
     　　*/
     @RequestMapping("addTravelRegistration")
     @ResponseBody
-    public Integer addTravelRegistration(Travel travel){
-        yreService.addTravelRegistration(travel);
+    public Integer addTravelRegistration(Travel travel,HttpServletRequest request){
+        yreService.addTravelRegistration(travel,request);
         return 1;
     }
 
@@ -229,8 +230,17 @@ public class YreController {
     　　*/
     @RequestMapping("queryDeptTree")
     @ResponseBody
-    public List<DeptPojo> queryDeptTree(){
-        return yreService.queryDeptTree();
+    public List<DeptPojo> queryDeptTree(String id){
+
+        List<DeptPojo> list= yreService.queryDeptTree(id);
+        for (DeptPojo deptPojo : list) {
+            String id1 = deptPojo.getDeptid();
+            List<DeptPojo> queryTree = queryDeptTree(id1);
+            if(queryTree!=null &&queryTree.size()>0){
+                deptPojo.setNodes(queryTree);
+            }
+        }
+        return  list;
     }
 
     /**
@@ -277,5 +287,54 @@ public class YreController {
         JSONObject jsonObject = yreService.queryAttendancesetting(offset, limit, attendancesetting);
         return jsonObject;
     }
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags} 
+    　　* @return ${return_type} 
+    　　* @throws  查询请假登记
+    　　* @author 因蓉儿
+    　　* @date 2018/8/20 21:09
+    　　*/
+    @RequestMapping("queryLeaveRegistration")
+    @ResponseBody
+    public JSONObject queryLeaveRegistration(Integer offset,Integer limit,QingJia qingJia){
+        JSONObject jsonObject = yreService.queryLeaveRegistration(offset, limit, qingJia);
+        return jsonObject;
+    }
+
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags}
+    　　* @return ${return_type}
+    　　* @throws  请假详情
+    　　* @author 因蓉儿
+    　　* @date 2018/8/21 11:25
+    　　*/
+    @RequestMapping("queryQingJiaXiangQing")
+    public ModelAndView queryQingJiaXiangQing(String qingjiaid){
+        ModelAndView mv = new ModelAndView();
+        QingJia qingjia1 = yreService.queryQingJiaXiangQing(qingjiaid);
+        mv.addObject("qingjia",qingjia1);
+        mv.setViewName("yin/qingJiaXiangQing");
+        return mv;
+    }
+
+    /**
+    　　* @Description: TODO
+    　　* @param ${tags} 
+    　　* @return ${return_type} 
+    　　* @throws  新增请假登记
+    　　* @author 因蓉儿
+    　　* @date 2018/8/21 11:38
+    　　*/
+    @RequestMapping("addLeaveRegistration")
+    @ResponseBody
+    public Integer addLeaveRegistration(QingJia qingJia,HttpServletRequest request){
+        yreService.addLeaveRegistration(qingJia,request);
+        return 1;
+    }
+
 
 }
