@@ -27,13 +27,13 @@ public interface CXService {
 
 
 //草稿箱未提交
-    List<ShenQing> queryCaogao(ShenQing shengqing,Integer offset,Integer limit);
-    Long tctota(ShenQing shengqing);
+    List<ShenQing> queryCaogao(Integer offset,Integer limit,String userid);
+    Long tctota(String userid);
 
 
     //草稿箱已提交
-    Long tctotas(ShenQing shengqing);
-    List<ShenQing> queryshen(ShenQing shengqing, Integer offset, Integer limit);
+    Long tctotas(String userid);
+    List<ShenQing> queryshen( Integer offset, Integer limit,String userid);
 
     void updateProce(String proceid);
 
@@ -55,11 +55,13 @@ public interface CXService {
 
     List<WorkTree> queryListTree();
 
-    List<ShenQing> queryLiuChang1();
+    List<ShenQing> queryLiuChang1(String  userid);
 
-    List<ShenQing> queryLiuChang2();
+    List<ShenQing> queryLiuChang2(String  userid);
 
-    List<ShenQing> queryLiuChang3();
+    List<ShenQing> queryLiuChang3(String  userid);
 
-    List<ShenQing> queryLiuChang4();
+    List<ShenQing> queryLiuChang4(String  userid);
+
+    List<ShenQing> queryLiu(String userid);
 }

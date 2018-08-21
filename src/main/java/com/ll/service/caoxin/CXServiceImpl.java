@@ -31,8 +31,8 @@ public class CXServiceImpl implements CXService {
     }
 
     @Override
-    public List<ShenQing> queryCaogao(ShenQing shengqing, Integer offset, Integer limit) {
-        return cxdao.queryCaogao(shengqing,offset,limit);
+    public List<ShenQing> queryCaogao(Integer offset, Integer limit,String userid) {
+        return cxdao.queryCaogao(offset,limit,userid);
     }
 
     @Override
@@ -41,18 +41,17 @@ public class CXServiceImpl implements CXService {
     }
 
     @Override
-    public Long tctota(ShenQing shengqing) {
-        return cxdao.tctota(shengqing);
+    public Long tctota(String userid) {
+        return cxdao.tctota(userid);
     }
 
     @Override
-    public Long tctotas(ShenQing shengqing) {
-        return cxdao.tctotas(shengqing);
+    public Long tctotas(String userid) {
+        return cxdao.tctotas(userid);
     }
-
     @Override
-    public List<ShenQing> queryshen(ShenQing shengqing, Integer offset, Integer limit) {
-        return cxdao.queryshen(shengqing,offset,limit);
+    public List<ShenQing> queryshen(Integer offset, Integer limit,String userid) {
+        return cxdao.queryshen(offset,limit,userid);
     }
 
     @Override
@@ -85,8 +84,22 @@ public class CXServiceImpl implements CXService {
     @Override
     public void updatebohui(ShenQing shen) {
        String  str = shen.getShenhetongguo();
-       shen.setProcerole(str+","+shen.getProcerole());
-       shen.setShenhetongguo(" ");
+        if(str.indexOf(",")!=-1){
+            String[] split=str.split(",");
+            String zxc="";
+            for (int i = 0; i < split.length; i++) {
+                if(i>0){
+                    zxc += ","+split[i];
+                }
+            }
+            zxc=zxc.substring(1);
+            shen.setProcerole(split[0]+","+shen.getProcerole());
+            shen.setShenhetongguo(zxc);
+        }
+        if(str.indexOf(",")==-1){
+            shen.setProcerole(str+","+shen.getProcerole());
+            shen.setShenhetongguo("");
+        }
        cxdao.updatebohui(shen);
     }
 
@@ -96,34 +109,38 @@ public class CXServiceImpl implements CXService {
     }
     @Override
     public void updatepro(ShenQing shen2){
-        String pro = shen2.getProcerole();
-        String[] split = pro.split(",");
-        String str="";
-        if(pro.indexOf(",")!=-1){
-            for (int i = 0; i < split.length; i++) {
-                shen2.setShenhetongguo(split[0]);
-                if(i>0){
-                    str += ","+split[i];
+            String pro = shen2.getProcerole();
+            String[] split = pro.split(",");
+            String str="";
+            if(pro.indexOf(",")!=-1){
+                for (int i = 0; i < split.length; i++) {
+                    if(i>0){
+                        str += ","+split[i];
+                    }
                 }
             }
-            str=str.substring(1);
-        }
-        System.out.println(str);
+        str=str.substring(1);
+        shen2.setShenhetongguo(split[0]+","+shen2.getShenhetongguo());
         shen2.setProcerole(str);
         cxdao.updatepro(shen2);
     }
-
-
     @Override
     public void zhipairen(String zxc,ShenQing shen) {
        String  pro = shen.getProcerole();
+       String dd="";
         if(pro.indexOf(",") != -1){
             String [] ss = pro.split(",");
             for (int i = 0; i < ss.length; i++) {
-                shen.setProcerole(zxc+","+ss[i]);
+                if(i>0){
+                    dd += ","+ss[i];
+                }
+                shen.setZhipairole(ss[0]);
             }
+            dd=dd.substring(1);
+            shen.setProcerole(zxc+","+dd);
         }
         if(pro.indexOf(",") == -1){
+            shen.setZhipairole(shen.getProcerole());
             shen.setProcerole(zxc);
         }
         cxdao.updatePro(shen);
@@ -135,20 +152,25 @@ public class CXServiceImpl implements CXService {
     }
 
     @Override
-    public List<ShenQing> queryLiuChang1() {
-        return cxdao.queryLiuChang1();
+    public List<ShenQing> queryLiuChang1(String  userid) {
+        return cxdao.queryLiuChang1(userid);
     }
     @Override
-    public List<ShenQing> queryLiuChang2() {
-        return cxdao.queryLiuChang2();
+    public List<ShenQing> queryLiuChang2(String  userid) {
+        return cxdao.queryLiuChang2(userid);
     }
     @Override
-    public List<ShenQing> queryLiuChang3() {
-        return cxdao.queryLiuChang3();
+    public List<ShenQing> queryLiuChang3(String  userid) {
+        return cxdao.queryLiuChang3(userid);
     }
     @Override
-    public List<ShenQing> queryLiuChang4() {
-        return cxdao.queryLiuChang4();
+    public List<ShenQing> queryLiuChang4(String  userid) {
+        return cxdao.queryLiuChang4(userid);
+    }
+
+    @Override
+    public List<ShenQing> queryLiu(String userid) {
+        return cxdao.queryLiu(userid);
     }
 
     @Override
