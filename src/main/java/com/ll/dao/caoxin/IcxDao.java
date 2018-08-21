@@ -29,18 +29,21 @@ public interface IcxDao {
     User geren(String userid);
 
     //申请表未提交
-    @Select("select count(*) from ll_shenqing   where proceType=0 ")
-    Long tctota(ShenQing shengqing);
+    @Select("select count(*) from ll_shenqing   where proceType=0  and  userid=#{userid} ")
+    Long tctota(@Param("userid") String userid);
 
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=0   LIMIT #{start},#{end}")
-    List<ShenQing> queryCaogao(@Param("shengqing") ShenQing shengqing,@Param("start") Integer offset, @Param("end")Integer limit);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=0 and t.`userid`=#{userid} LIMIT #{start},#{end}")
+    List<ShenQing> queryCaogao(@Param("start") Integer offset, @Param("end")Integer limit,@Param("userid")String userid);
 
     //申请表已提交
-    @Select("select count(*) from ll_shenqing  where proceType=1")
-    Long tctotas(ShenQing shengqing);
+    @Select("select count(*) from ll_shenqing  where proceType=1 and userid=#{userid} ")
+    Long tctotas(@Param("userid")String userid);
 
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=1   LIMIT #{start},#{end}")
-    List<ShenQing> queryshen(@Param("shengqing") ShenQing shengqing,@Param("start") Integer offset, @Param("end")Integer limit);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)\n" +
+            "  FROM \n" +
+            " ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.dengji,lw.woname\n" +
+            " FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.woid and t.userid=#{userid}  LIMIT #{start},#{end}")
+    List<ShenQing> queryshen(@Param("start") Integer offset, @Param("end")Integer limit,@Param("userid")String userid);
 
     @Update("update ll_shenqing set proceType= 1 where proceid=#{ proceid}")
     void updateProce(@Param("proceid") String proceid);
@@ -54,24 +57,29 @@ public interface IcxDao {
 
     @Update("update ll_shenqing set shenhetongguo=#{shenhetongguo},procerole=#{procerole} where proceid=#{proceid}")
     void updatepro(ShenQing shen2);
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=1")
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` ")
     List<ShenQing> queryShenqing();
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=0")
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=0 AND t.`woid`=lw.`woid`")
     List<ShenQing> queryCaoGao();
+
     @Update("update ll_shenqing set shenhetongguo=#{shenhetongguo},procerole=#{procerole} where proceid=#{proceid}")
     void updatebohui(ShenQing shen);
     @Select("select *  from ll_role ")
     List<Procedures> queryrole();
-    @Update("update ll_shenqing set  procerole=#{procerole}  where proceid=#{proceid}")
+    @Update("update ll_shenqing set  procerole=#{procerole},zhipairole=#{zhipairole}  where proceid=#{proceid}")
     void updatePro(ShenQing shen);
     @Select("select * from ll_workTree")
     List<WorkTree> queryListTree();
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=1")
-    List<ShenQing> queryLiuChang1();
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=2")
-    List<ShenQing> queryLiuChang2();
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=3")
-    List<ShenQing> queryLiuChang3();
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=4")
-    List<ShenQing> queryLiuChang4();
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=1  and t.userid=#{userid}")
+    List<ShenQing> queryLiuChang1(@Param("userid")String  userid);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=2  and t.userid=#{userid}")
+    List<ShenQing> queryLiuChang2(@Param("userid")String  userid);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=3 and t.userid=#{userid}")
+    List<ShenQing> queryLiuChang3(@Param("userid")String  userid);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=4 and t.userid=#{userid}")
+    List<ShenQing> queryLiuChang4(@Param("userid")String  userid);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)\n" +
+            " FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` \n" +
+            " FROM ll_shenqing t ,ll_workname lw  WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND  t.`userid`=#{userid} ")
+    List<ShenQing> queryLiu(@Param("userid") String userid);
 }
