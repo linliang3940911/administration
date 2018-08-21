@@ -19,7 +19,7 @@
 </head>
 <body>
 <button class="btn btn-primary "  data-dismiss="modal" aria-hidden="true" onclick="querydc()">导出</button>
-<div id="dividss"></div>
+<div id="divshen"></div>
 <!--  弹框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,20 +64,20 @@
     });
     function junquerycharge(){
         querycharge();
-        $('#dividss').bootstrapTable('refresh');
+        $('#divshen').bootstrapTable('refresh');
     }
     function xinzeng() {
         location.href="<%=request.getContextPath()%>/caoxin/addor"
     }
     function search_list(){
-        $("#dividss").bootstrapTable("refresh",{offset:1})
+        $("#divshen").bootstrapTable("refresh",{offset:1})
     }
     function querycharge(){
-        $('#dividss').bootstrapTable({
+        $('#divshen').bootstrapTable({
             url:'<%=request.getContextPath()%>/caoxin/queryshen',
             method: "post",
             pagination: true,
-            pageList:[ 10,15,20,30],//分页组件
+            pageList:[10,15,20,30],//分页组件
             pageNumber:1,
             pageSize:10,//默认每页条数
             height: 700,
@@ -95,18 +95,18 @@
                 {field:'userchek',checkbox:true},
                 {field:'proceid',title:'id',width:350},
                 {field:'procedate',title:'时间',width:300},
-                {field:'roletext',title:'审核人',width:300,
-                    formatter: function(value,row,index){
-                    var zxc=row.roletext;
-                        if(zxc !=null){
-                            str=zxc.split(",")
-                            for(var i=0;i<str.length;i++){
-                                return str[i];
-                            }
-                        }
-                        return "已审核完";
-                    }
-                },
+//                {field:'roletext',title:'审核人',width:300,
+//                    formatter: function(value,row,index){
+//                    var zxc=row.roletext;
+//                        if(zxc !=null){
+//                            str=zxc.split(",")
+//                            for(var i=0;i<str.length;i++){
+//                                return str[i];
+//                            }
+//                        }
+//                        return "已审核完";
+//                    }
+//                },
                 {field:'proceuser',title:'申请人',width:300},
                 {field:'act',title:'操作',width:300,
                     formatter: function(value,row,index){

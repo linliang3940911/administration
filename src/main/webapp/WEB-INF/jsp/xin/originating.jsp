@@ -82,7 +82,7 @@
             url:'<%=request.getContextPath()%>/caoxin/queryCaogao',
             method: "post",
             pagination: true,
-            pageList:[ 10,15,20,30],//分页组件
+            pageList:[10,15,20,30],//分页组件
             pageNumber:1,
             pageSize:10,//默认每页条数
             height: 700,

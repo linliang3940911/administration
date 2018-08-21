@@ -51,7 +51,7 @@
                         alert("密码错误");
                     }
                     if(msg == '2'){//登录成功 直接跳转到首页
-                    location.href="<%=request.getContextPath()%>/modle/queryHomePage"
+                    location.href="<%=request.getContextPath()%>/caoxin/queryLiu"
                 }
             },
             error:function(){

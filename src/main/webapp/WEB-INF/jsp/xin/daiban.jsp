@@ -1,7 +1,14 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ASUS
+  Date: 2018-08-21
+  Time: 15:43
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Insert title here</title>
+    <title>Title</title>
     <script src="<%=request.getContextPath()%>/js/jquery-1.11.3.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap3/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/js/bootstrap3/css/bootstrap.css">
@@ -18,44 +25,13 @@
     <script src="<%=request.getContextPath()%>/js/bootbox.min.js"></script>
 </head>
 <body>
-<div id="dividss"></div>
-
-<!--  弹框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <strong>个人中心:</strong>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="table" id="Coupon"></div>
-            <span id="span-id"></span>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guanbi()" >关闭</button>
-                <span id="span-id2"></span>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div  id="zxc"></div>
 <script type="text/javascript">
     $(function(){
         querycharge();
     });
-    function junquerycharge(){
-        querycharge();
-        $('#dividss').bootstrapTable('refresh');
-    }
-    function xinzeng() {
-        location.href="<%=request.getContextPath()%>/caoxin/addor"
-    }
-
-    function search_list(){
-        $("#dividss").bootstrapTable("refresh",{offset:1})
-    }
     function querycharge(){
-        $('#dividss').bootstrapTable({
+        $('#zxc').bootstrapTable({
             url:'<%=request.getContextPath()%>/caoxin/queryshen',
             method: "post",
             pagination: true,
@@ -88,35 +64,52 @@
                 },
                 {field:'proceuser',title:'申请人',width:300},
                 {field:'woname',title:'流程名字',width:300},
-                {field:'act',title:'操作',width:300,
+                {field:'zhipairole',title:'指派人',width:300,
                     formatter: function(value,row,index){
-                    if(row.roletext!=null && row.shenhetongguo != null){
-
-                                var  zxc=  '<button class="btn btn-primary " id="butt1"  data-dismiss="modal" aria-hidden="true" onclick="tongguo(\''+row.proceid+'\')">通过</button>'
-                                    +'<button class="btn btn-primary "  id="butt2" data-dismiss="modal" aria-hidden="true" onclick="bohui(\''+row.proceid+'\')">驳回</button>'
-                                    +'<button class="btn btn-primary "  id="butt3" data-dismiss="modal" aria-hidden="true" onclick="zhipai(\''+row.proceid+'\')">指派</button>'
-                                return zxc;
-
+                        if(row.zhipairole=="1"){
+                            return "员工";
+                        }
+                        if(row.zhipairole=="2"){
+                            return "主管";
+                        }
+                        if(row.zhipairole=="3"){
+                            return "经理";
+                        }
+                        if(row.zhipairole=="4"){
+                            return "总监";
+                        }
+                        if(row.zhipairole=="5"){
+                            return "副总监";
+                        }
+                        if(row.zhipairole=="6"){
+                            return "主任";
+                        }
+                        if(row.zhipairole=="7"){
+                            return "员工";
+                        }
+                        if(row.zhipairole=null){
+                            return "未指派人";
+                        }
                     }
-                    if(row.roletext==null){
-                        var  zxc=  '<button class="btn btn-default " id="butt1"  data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">通过</button>'
-                            +'<button class="btn btn-default "  id="butt2" data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">驳回</button>'
-                            +'<button class="btn btn-default "  id="butt3" data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">指派</button>'
-                        return zxc;
-
-                    }
-
+                },
+                {field:"dfgyijhg",title:'操作',width:300,
+                    formatter: function(value,row,index){
+                    var  zxc=  '<button class="btn btn-primary " id="butt1"  data-dismiss="modal" aria-hidden="true" onclick="tongguo(\''+row.proceid+'\')">通过</button>'
+                        +'<button class="btn btn-primary "  id="butt2" data-dismiss="modal" aria-hidden="true" onclick="bohui(\''+row.proceid+'\')">驳回</button>'
+                    return zxc;
                     }
                 },
             ]
         });
     }
+
+
     function  tongguo(proceid){
         $.ajax({
             url: '<%=request.getContextPath()%>/caoxin/tongguo?proceid='+proceid,
             type:"post",
             success:function(){
-                location.href="<%=request.getContextPath()%>/caoxin/shenhe"
+                $("#divzxc").bootstrapTable('refresh');
             }
         });
     }
@@ -125,23 +118,10 @@
             url: '<%=request.getContextPath()%>/caoxin/bohui?proceid='+proceid,
             type:"post",
             success:function(){
-                location.href="<%=request.getContextPath()%>/caoxin/shenhe"
+                $("#divzxc").bootstrapTable('refresh');
             }
         });
     }
-    function  zhipai(proceid){
-        $.ajax({
-            url: '<%=request.getContextPath()%>/caoxin/zhipai',
-            type:"post",
-            data:{"proceid":proceid},
-            success:function(result){
-                $("#span-id").html(result) ;
-                $("#myModal").modal("show") ;
-            }
-        });
-
-    }
-
 </script>
 </body>
 </html>

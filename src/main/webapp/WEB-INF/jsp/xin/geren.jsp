@@ -28,21 +28,21 @@
 </head>
 <body>
 <center>
-    姓名<input type="text"  name="username" value="${user.username}"  ><br>
-    密码<input type="password"  name="pwd" value="${user.pwd}"><br>
+    姓名<input type="text"  name="username" value="${user.username}"  disabled><br>
+    密码<input type="password"  name="pwd" value="${user.pwd}" disabled><br>
 
-    性别<input type="radio" name="usersex" value="1" <c:if test="${user.usersex ==1}">checked</c:if> > 男
-    <input type="radio" name="usersex" value="2" <c:if test="${user.usersex ==2}">checked</c:if> > 女<br>
+    性别<input type="radio" name="usersex" value="1" <c:if test="${user.usersex ==1}"  >checked</c:if> > 男
+    <input type="radio" name="usersex" value="2" <c:if test="${user.usersex ==2}"  >checked</c:if> > 女<br>
 
-    生日<input type="text"   name="userbirth" onClick="WdatePicker()" value="    <fmt:formatDate value='${user.userbirth}' pattern='yyyy-MM-dd'></fmt:formatDate>"/>
+    生日<input type="text" disabled  name="userbirth" onClick="WdatePicker()" value="    <fmt:formatDate value='${user.userbirth}' pattern='yyyy-MM-dd'></fmt:formatDate>"/>
     <br>
-    手机号<input type="text" name="userphone" value="${user.userphone}"/><br>
-    办公电话<input type="text"  name="userofficephone" value="${user.userofficephone}"/><br>
-    QQ<input type="text" name="userqq" value="${user.userqq}"><br>
-    电子邮箱<input type="text"  name="usermailbox" value="${user.usermailbox}" />
+    手机号<input type="text" disabled name="userphone" value="${user.userphone}"/><br>
+    办公电话<input type="text"  disabled name="userofficephone" value="${user.userofficephone}"/><br>
+    QQ<input type="text" disabled name="userqq" value="${user.userqq}"><br>
+    电子邮箱<input  disabled type="text"  name="usermailbox" value="${user.usermailbox}" />
     <br>
-    现住址<input type="text"  name="useraddress" value="${user.useraddress}"/><br>
-    企业微信账号<input type="text"name="qiyeweixinhao"  value="${user.qiyeweixinhao}"/><br>
+    现住址<input   disabled type="text"  name="useraddress" value="${user.useraddress}"/><br>
+    企业微信账号<input  disabled     type="text"name="qiyeweixinhao"  value="${user.qiyeweixinhao}"/><br>
     <img src=${user.userimg} id="showImg" style="width: 100px;height: 100px;">
 </center>
 </body>
