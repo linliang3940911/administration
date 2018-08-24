@@ -49,9 +49,7 @@ public interface CXService {
 
     void updatebohui(ShenQing shen);
 
-    List<Procedures> queryrole();
-
-    void zhipairen(String zxc,ShenQing shen);
+    void zhipairen(String zxc,ShenQing shen,String  usid);
 
     List<WorkTree> queryListTree();
 
@@ -64,4 +62,8 @@ public interface CXService {
     List<ShenQing> queryLiuChang4(String  userid);
 
     List<ShenQing> queryLiu(String userid);
+
+    List<User> queryUser(String userrole,String userid);
+
+    List<ShenQing> querylist();
 }
