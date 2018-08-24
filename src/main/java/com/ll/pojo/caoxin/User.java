@@ -21,6 +21,7 @@ public class User {
     private String pwd;//
     private String deptid;//部门关联id
     private String deptname;//业务字段
+    private String  roleid;//业务字段
 
     public String getUserid() {
         return userid;
@@ -134,6 +135,14 @@ public class User {
         this.deptname = deptname;
     }
 
+    public String getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(String roleid) {
+        this.roleid = roleid;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -151,6 +160,7 @@ public class User {
                 ", pwd='" + pwd + '\'' +
                 ", deptid='" + deptid + '\'' +
                 ", deptname='" + deptname + '\'' +
+                ", roleid='" + roleid + '\'' +
                 '}';
     }
 }
