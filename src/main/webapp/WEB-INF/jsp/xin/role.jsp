@@ -12,10 +12,13 @@
     <title>Title</title>
 </head>
 <body>
+<c:forEach items="${list}" var="sss">
+    <input type="hidden"  id="user" name="proceid" value="${sss.userid}"  />
+</c:forEach>
 <input type="hidden"  id="pro" name="proceid" value="${shen.proceid}"  />
         <select id="city" class="select">
             <c:forEach items="${list}" var="s">
-            <option value="${s.roleid}">${s.roletext}</option>
+            <option value="${s.roleid}">${s.username}</option>
             </c:forEach>
         </select>
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fromrelo()">提交</button>
@@ -23,10 +26,11 @@
 function fromrelo() {
     var zxc=$("#city").val();
     var proceid=$("#pro").val();
+    var usid=$("#user").val();
     $.ajax({
         url : "<%=request.getContextPath()%>/caoxin/zhipairen",
         type: "post",
-        data:{"zxc":zxc,"proceid":proceid},
+        data:{"zxc":zxc,"proceid":proceid,"usid":usid},
         success:function () {
             location.href="<%=request.getContextPath()%>/caoxin/shenhe"
         }
