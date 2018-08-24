@@ -39,11 +39,8 @@ public interface IcxDao {
     @Select("select count(*) from ll_shenqing  where proceType=1 and userid=#{userid} ")
     Long tctotas(@Param("userid")String userid);
 
-    @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext)\n" +
-            "  FROM \n" +
-            " ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.dengji,lw.woname\n" +
-            " FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.woid and t.userid=#{userid}  LIMIT #{start},#{end}")
-    List<ShenQing> queryshen(@Param("start") Integer offset, @Param("end")Integer limit,@Param("userid")String userid);
+    @Select("SELECT t.*, (SELECT  GROUP_CONCAT( c.roletext)  FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext FROM ll_shenqing t  WHERE t.proceType=1   LIMIT #{start},#{end}")
+    List<ShenQing> queryshen(@Param("start") Integer offset, @Param("end")Integer limit);
 
     @Update("update ll_shenqing set proceType= 1 where proceid=#{ proceid}")
     void updateProce(@Param("proceid") String proceid);
@@ -91,4 +88,6 @@ public interface IcxDao {
             "\t\tWHERE DATE_FORMAT(procedate,\"%Y\") = '2018'\n" +
             "\t\tGROUP BY DATE_FORMAT(procedate,\"%m\")")
     List<ShenQing> querylist();
+    @Select("select * from user a,ll_role b where  a.userrole=b.roleid and a.userid=#{str}")
+    User queryRoles(@Param("str") String str);
 }

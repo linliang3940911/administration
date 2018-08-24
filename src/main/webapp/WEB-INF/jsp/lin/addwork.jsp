@@ -108,7 +108,7 @@
          success:function(result){
             if(result==1){
             alert("添加成功")
-           history.go(-1)
+
             }
 
          }

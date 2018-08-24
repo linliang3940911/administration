@@ -52,10 +52,9 @@
               type:"post",
               data:$("#form-id").serialize(),
               success:function(result){
-
                   if(result==1){
                       alert("新增成功")
-                      history.go(-1)
+
                   }
 
               }

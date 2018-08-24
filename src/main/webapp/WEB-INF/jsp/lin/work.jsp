@@ -112,7 +112,6 @@
                 showPaginationSwitch:false,//是否显示 数据条数选择框
                 showRefresh:false,//是否显示刷新按钮
                 singleSelect : true,//单选
-
                 detailView:false,//设置为 true 可以显示详细页面模式。
                 showFooter:false,//是否显示列脚
                 clickToSelect: true, //是否启用点击选中行
@@ -178,7 +177,6 @@
                 title:text,
                 url:"<%=request.getContextPath()%>/"+url+"?woid="+id
             });
-
         }
 
 

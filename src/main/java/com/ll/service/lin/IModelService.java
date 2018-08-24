@@ -1,7 +1,12 @@
 package com.ll.service.lin;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ll.pojo.caoxin.User;
 import com.ll.pojo.lin.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,4 +40,26 @@ public interface IModelService {
     WorkName addshenqingliycheng(String woid);
 
     void addshenqingliychengs(ShenQing shenQing,String username,String userid,String woid);
+
+    JSONObject querylistWangPan(int offset ,int limit, Wangpan wangpan);
+
+    void addpackages(Wangpan wangpan);
+
+
+    String uploadImg (MultipartFile myfile)throws IOException;
+
+    void adduploadFile(Wangpan wangpan);
+
+    KaoQinJi queryUserList(String userid,Date date,String format);
+
+    void updateKaoQinJi(KaoQinJi kaoQinJi,String replace,String format);
+
+    void addTime(KaoQinJi kaoQinJi);
+
+
+    List<KaoQinJi> queryKaoqinji(String userid);
+
+    User geren(String userid);
+
+    void deleteByIdWangPan(Wangpan wangpan);
 }

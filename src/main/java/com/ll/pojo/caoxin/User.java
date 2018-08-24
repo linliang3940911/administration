@@ -22,6 +22,8 @@ public class User {
     private String deptid;//部门关联id
     private String deptname;//业务字段
     private String  roleid;//业务字段
+    private String userrole;//业务字段
+    private String roletext;//业务角色名字字段
 
     public String getUserid() {
         return userid;
@@ -143,6 +145,22 @@ public class User {
         this.roleid = roleid;
     }
 
+    public String getUserrole() {
+        return userrole;
+    }
+
+    public void setUserrole(String userrole) {
+        this.userrole = userrole;
+    }
+
+    public String getRoletext() {
+        return roletext;
+    }
+
+    public void setRoletext(String roletext) {
+        this.roletext = roletext;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -161,6 +179,8 @@ public class User {
                 ", deptid='" + deptid + '\'' +
                 ", deptname='" + deptname + '\'' +
                 ", roleid='" + roleid + '\'' +
+                ", userrole='" + userrole + '\'' +
+                ", roletext='" + roletext + '\'' +
                 '}';
     }
 }

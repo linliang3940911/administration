@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -142,9 +143,24 @@ public class CaoController {
     public String login(User user,HttpServletRequest request){
         Map<String, Object> map = cxService.login(user);
         User user2 = (User) map.get("user2");
-        if(user2 != null){
-            request.getSession().setAttribute("loginUser", user2);
+        HttpSession session = request.getSession();
+        ServletContext application = request.getSession().getServletContext();
+        if(application.getAttribute("login")==null){
+            application.setAttribute(user2.getUserid(),session.getId());
+            application.setAttribute(session.getId(),session);
+        }else {
+            String attribute =(String)application.getAttribute(user2.getUserid());
+            HttpSession oldSession  =(HttpSession) application.getAttribute(attribute);
+            oldSession.invalidate();
+            application.removeAttribute(oldSession.getId());
+            application.setAttribute(session.getId(), session);   //将新的session保存到application
+            application.removeAttribute(user2.getUserid());   //将oldSession的id从application中移除
+            application.setAttribute(user2.getUserid(), session.getId());   //将新的session的Id保存到application
         }
+        if(user2 != null){
+            session.setAttribute("loginUser", user2);
+        }
+
         return map.get("flag").toString();
     }
     /**  注册页面

@@ -7,46 +7,46 @@ import java.util.List;
 
 @Mapper
 public interface YreMapper {/**
-　　* @Description: TODO
-　　* @param ${tags}
-　　* @return ${return_type}
-　　* @throws 分页查询上下班登记(查询总条数)
-　　* @author 因蓉儿
-　　* @date 2018/8/11 10:45
-　　*/
-    @Select("select count(*) from c_commute")
-    Long queryRegistrationCount(@Param("commute") Commute commute);
+ 　　* @Description: TODO
+ 　　* @param ${tags}
+ 　　* @return ${return_type}
+ 　　* @throws 分页查询上下班登记(查询总条数)
+ 　　* @author 因蓉儿
+ 　　* @date 2018/8/11 10:45
+ 　　*/
+@Select("select count(*) from c_commute")
+Long queryRegistrationCount(@Param("commute") Commute commute);
 
     /**
-    　　* @Description: TODO
-    　　* @param ${tags}
-    　　* @return ${return_type}
-    　　* @throws 分页查询上下班登记(查询当前页数据)
-    　　* @author 因蓉儿
-    　　* @date 2018/8/11 10:45
-    　　*/
+     　　* @Description: TODO
+     　　* @param ${tags}
+     　　* @return ${return_type}
+     　　* @throws 分页查询上下班登记(查询当前页数据)
+     　　* @author 因蓉儿
+     　　* @date 2018/8/11 10:45
+     　　*/
     @Select("select * from c_commute limit #{page},#{rows}")
     List<Commute> queryRegistrationPage(@Param("page")Integer page,@Param("rows") Integer rows,@Param("commute") Commute commute);
 
     /**
-    　　* @Description: TODO
-    　　* @param ${tags}
-    　　* @return ${return_type}
-    　　* @throws 回显说明情况
-    　　* @author 因蓉儿
-    　　* @date 2018/8/11 15:42
-    　　*/
+     　　* @Description: TODO
+     　　* @param ${tags}
+     　　* @return ${return_type}
+     　　* @throws 回显说明情况
+     　　* @author 因蓉儿
+     　　* @date 2018/8/11 15:42
+     　　*/
     @Select("select * from c_commute where commuteid = #{commuteid}")
     Commute addReasonById(String commuteid);
 
     /**
-    　　* @Description: TODO
-    　　* @param ${tags}
-    　　* @return ${return_type}
-    　　* @throws 新增说明情况
-    　　* @author 因蓉儿
-    　　* @date 2018/8/11 15:42
-    　　*/
+     　　* @Description: TODO
+     　　* @param ${tags}
+     　　* @return ${return_type}
+     　　* @throws 新增说明情况
+     　　* @author 因蓉儿
+     　　* @date 2018/8/11 15:42
+     　　*/
     @Update("update c_commute set cause = #{cause} where commuteid = #{commuteid}")
     void addReason2(Commute commute);
 
@@ -90,8 +90,8 @@ public interface YreMapper {/**
     @Select("select u.*,c.* from kaoqinji c,user u where u.userid = c.userid limit #{page},#{rows}")
     List<KaoQinJi> queryKaoQinJiJiLuPage(@Param("page") Integer page, @Param("rows")Integer rows, @Param("kaoQinJi")KaoQinJi kaoQinJi);
 
-    @Select("select * from department")
-    List<DeptPojo> queryDeptTree();
+    @Select("select * from department where deptid = #{id}")
+    List<DeptPojo> queryDeptTree(@Param("id") String id);
 
     @Select("select count(*) FROM onduty o,kaoqinbanci k,department d,user u where u.deptid = d.deptid and o.userid = u.userid and o.banciid = k.banciid")
     Long queryOnTheJobStatusCount(@Param("onduty") Onduty onduty);
@@ -108,7 +108,18 @@ public interface YreMapper {/**
     @Select("select count(*) from attendancesetting")
     Long queryAttendancesettingCount(@Param("attendancesetting") Attendancesetting attendancesetting);
 
-    @Select("select * from attendancesetting")
+    @Select("select * from attendancesetting limit #{page},#{rows}")
     List<Attendancesetting> queryAttendancesettingPage(@Param("page") Integer page,@Param("rows") Integer rows,@Param("attendancesetting") Attendancesetting attendancesetting);
 
+    @Select("select count(*) from qingjia q,user u where q.userid = u.userid")
+    Long queryLeaveRegistrationCount(@Param("qingJia") QingJia qingJia);
+
+    @Select("select * from qingjia q,user u where q.userid = u.userid limit #{page},#{rows}")
+    List<QingJia> queryLeaveRegistrationPage(@Param("page") Integer page,@Param("rows") Integer rows,@Param("qingJia") QingJia qingJia);
+
+    @Select("SELECT q.qingjiaid,q.kaishitime,q.jieshutime,q.qingjiayuanyin FROM qingjia q WHERE qingjiaid = #{qingjiaid}")
+    QingJia queryQingJiaXiangQing(String qingjiaid);
+
+    @Insert("INSERT INTO qingjia(qingjiaid,shenqingtime,kaishitime,jieshutime,qingjiatianshu,nianjiatianshu,tiaoxiutianshu,qingjiatype,qingjiayuanyin,userid) VALUES(#{qingjiaid},#{shenqingtime},#{kaishi},#{jieshu},#{qingjiatianshu},#{nianjiatianshu},#{tiaoxiutianshu},#{qingjiatype},#{qingjiayuanyin},#{userid})")
+    void addLeaveRegistration(QingJia qingJia);
 }

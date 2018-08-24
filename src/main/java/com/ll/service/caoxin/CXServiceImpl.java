@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CXServiceImpl implements CXService {
@@ -51,7 +48,19 @@ public class CXServiceImpl implements CXService {
     }
     @Override
     public List<ShenQing> queryshen(Integer offset, Integer limit,String userid) {
-        return cxdao.queryshen(offset,limit,userid);
+        List<ShenQing> queryshen = cxdao.queryshen(offset, limit);
+        User user= cxdao.queryRoles(userid);
+        List<ShenQing> query=new ArrayList<ShenQing>();
+        for (ShenQing shenQing : queryshen) {
+            String[] split = shenQing.getRoletext().split(",");
+
+                if(user.getRoletext().equals(split[0])){
+                    query.add(shenQing);
+
+            }
+        }
+        return query;
+
     }
 
     @Override

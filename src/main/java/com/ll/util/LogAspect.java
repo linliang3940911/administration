@@ -17,12 +17,16 @@ import com.ll.service.yre.IYreService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
 　　* @Description: TODO
@@ -67,9 +71,11 @@ public class LogAspect {
 	@Pointcut("execution(* com.ll.service..*.delete*(..))")
 	public void deleteCell() {}
 
+
 	@AfterReturning(value="querylog()")
 	//切点信息类(aop切入查询方法去自定义线程类，去service层将方法存入队列中)
 	public  void  queryLogBean(JoinPoint jp) {
+
 		String operationMethod = jp.getSignature().getName();
 
 

@@ -3,18 +3,26 @@ package com.ll.controller.lin;
 import com.alibaba.fastjson.JSONObject;
 import com.ll.pojo.caoxin.User;
 import com.ll.pojo.lin.*;
+import com.ll.service.caoxin.CXService;
 import com.ll.service.lin.IModelService;
+import org.apache.catalina.core.ApplicationFilterConfig;
+import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 /**
  * @Description: java类作用描述
  * @Author: 林亮
@@ -31,10 +39,21 @@ public class ModelController {
 
     @Autowired
     private IModelService ModelService;
-        @RequestMapping("queryHomePage")
-    public String homepage(){
+    @Autowired
+    private CXService cxService;
+    @Autowired
+    private SolrClient solrClient;
+    @Autowired
+    private RedisTemplate  redisTemplate;
 
-
+    @RequestMapping("queryHomePage")
+    public String homepage(HttpServletRequest request,Model modle){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        User use=ModelService.geren(user.getUserid());
+        List<ShenQing> list1 = cxService.queryLiu(user.getUserid());
+        modle.addAttribute("list",list1);
+        modle.addAttribute("use",use);
         return "index";
     }
    
@@ -92,6 +111,7 @@ public class ModelController {
     }
     @RequestMapping("attribute")
     public  String attribute(String woid, Model model){
+
         model.addAttribute("woi",woid);
         return  "lin/Attribute";
     }
@@ -177,7 +197,7 @@ public class ModelController {
     * @UpdateRemark:   修改内容
     * @Version:        1.0
     */
-    @RequestMapping("/application")
+   @RequestMapping("/application")
    public  String application(WorkName workName,Model modle){
       List<Attribute> list =  ModelService.application(workName);
         modle.addAttribute("list",list);
@@ -207,6 +227,134 @@ public class ModelController {
         System.out.println(dengji);
         return  1;
     }
+
+    /**
+     * @Description:    跳转网盘页面
+     * @Author:         林亮
+     * @CreateDate:     2018/8/15 0015 9:40
+     * @UpdateUser:     林亮
+     * @UpdateDate:     2018/8/15 0015 9:40
+     * @UpdateRemark:   修改内容
+     * @Version:        1.0
+     */
+    @RequestMapping("/wangpan")
+    public String wangpan(){
+
+        return  "lin/wangpan";
+    }
+    /**
+     * @Description:    网盘内容查询
+     * @Author:         林亮
+     * @CreateDate:     2018/8/15 0015 9:42
+     * @UpdateUser:     林亮
+     * @UpdateDate:     2018/8/15 0015 9:42
+     * @UpdateRemark:   修改内容
+     * @Version:        1.0
+     */
+    @RequestMapping("/querylistWangPan")
+    @ResponseBody
+    public  JSONObject querylistWangPan(int offset, int limit, Wangpan wangpan){
+        if(wangpan.getId()==null&&!"".equals(wangpan.getId())){
+            wangpan.setId(0);
+            JSONObject json=ModelService.querylistWangPan(offset,limit,wangpan);
+        }
+        JSONObject json=ModelService.querylistWangPan(offset,limit,wangpan);
+        return  json;
+    }
+
+    /**
+     * @Description:    添加网盘目录
+     * @Author:         林亮
+     * @CreateDate:     2018/8/15 0015 18:27
+     * @UpdateUser:     林亮
+     * @UpdateDate:     2018/8/15 0015 18:27
+     * @UpdateRemark:   修改内容
+     * @Version:        1.0
+     */
+    @RequestMapping("/addpackages")
+    @ResponseBody
+    public Integer  addpackages(Wangpan wangpan){
+        ModelService.addpackages(wangpan);
+
+        return 1;
+    }
+
+    // uploadFile
+    @RequestMapping("/uploadFile")
+    @ResponseBody
+    public void uploadFile(MultipartFile myfile,Wangpan wangpan,
+                           HttpServletRequest request,HttpServletResponse response)throws IOException {
+        // 原始名称
+        String oldFileName = myfile.getOriginalFilename(); // 获取上传文件的原名
+        System.out.println(oldFileName);
+        Date date = new Date();
+        String uploadImg = ModelService.uploadImg(myfile);
+        wangpan.setUrl(uploadImg);
+        wangpan.setText(oldFileName);
+        wangpan.setUpddate(date);
+        ModelService.adduploadFile(wangpan);
+    }
+    /**
+     * @Description:    跳转签到日历
+     * @Author:         林亮
+     * @CreateDate:     2018/8/17 0017 17:02
+     * @UpdateUser:     林亮
+     * @UpdateDate:     2018/8/17 0017 17:02
+     * @UpdateRemark:   修改内容
+     * @Version:        1.0
+     */
+    @RequestMapping("/qiandaorili")
+    public  String qiandaorili(){
+
+        return "lin/qiandao";
+    }
+    @RequestMapping("/addTime")
+    @ResponseBody
+    public Integer addTime(HttpServletRequest request){
+        User user2 = (User)request.getSession().getAttribute("loginUser");
+        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
+        String format = formatter.format(new Date());
+        KaoQinJi user= ModelService.queryUserList(user2.getUserid(),new Date(),format);
+        KaoQinJi kaoQinJi = new KaoQinJi();
+        kaoQinJi.setUserid(user2.getUserid());
+        String replace = UUID.randomUUID().toString().replace("-", "");
+        if(user!=null){
+            kaoQinJi.setPmdowndakashijian(new Date());
+            ModelService.updateKaoQinJi(kaoQinJi,user.getUserid(),format);
+        }else {
+            kaoQinJi.setKaoqinid(replace);
+            kaoQinJi.setAmupdakashijian(new Date());
+            ModelService.addTime(kaoQinJi);
+
+        }
+        return 1;
+    }
+
+
+    @RequestMapping("/queryKaoqinji")
+    @ResponseBody
+    public List<KaoQinJi> queryKaoqinji(HttpServletRequest request){
+        User user2 = (User)request.getSession().getAttribute("loginUser");
+        List<KaoQinJi> list= ModelService.queryKaoqinji(user2.getUserid());
+        return list;
+    }
+
+    /**
+    * @Description:    删除网盘内容
+    * @Author:         林亮
+    * @CreateDate:     2018/8/20 0020 19:01
+    * @UpdateUser:     林亮
+    * @UpdateDate:     2018/8/20 0020 19:01
+    * @UpdateRemark:   修改内容
+    * @Version:        1.0
+    */
+    @RequestMapping("/deleteByIdWangPan")
+    @ResponseBody
+    public  Integer deleteByIdWangPan(Wangpan wangpan){
+        ModelService.deleteByIdWangPan(wangpan);
+        return 1;
+    }
+
 
 
 
