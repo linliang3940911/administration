@@ -3,6 +3,7 @@ package com.ll.pojo.lin;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: java类作用描述
@@ -31,6 +32,37 @@ public class ShenQing {
     private String roletext; //申请的审核人roletext
     private  String  woname;
     private  Integer  dengji;
+
+
+
+    //私有化x、y轴数据列表
+    private List<String> xlist;
+    private List<Integer> ylist;
+    private String month;
+    private Integer peoplenum;
+
+
+    @Override
+    public String toString() {
+        return "ShenQing{" +
+                "proceid='" + proceid + '\'' +
+                ", procedate=" + procedate +
+                ", procerole='" + procerole + '\'' +
+                ", proceuser='" + proceuser + '\'' +
+                ", proceType=" + proceType +
+                ", shenhetongguo='" + shenhetongguo + '\'' +
+                ", zhipairole='" + zhipairole + '\'' +
+                ", userid='" + userid + '\'' +
+                ", woid='" + woid + '\'' +
+                ", roletext='" + roletext + '\'' +
+                ", woname='" + woname + '\'' +
+                ", dengji=" + dengji +
+                ", xlist=" + xlist +
+                ", ylist=" + ylist +
+                ", month='" + month + '\'' +
+                ", peoplenum=" + peoplenum +
+                '}';
+    }
 
     public String getProceid() {
         return proceid;
@@ -128,21 +160,35 @@ public class ShenQing {
         this.dengji = dengji;
     }
 
-    @Override
-    public String toString() {
-        return "ShenQing{" +
-                "proceid='" + proceid + '\'' +
-                ", procedate=" + procedate +
-                ", procerole='" + procerole + '\'' +
-                ", proceuser='" + proceuser + '\'' +
-                ", proceType=" + proceType +
-                ", shenhetongguo='" + shenhetongguo + '\'' +
-                ", zhipairole='" + zhipairole + '\'' +
-                ", userid='" + userid + '\'' +
-                ", woid='" + woid + '\'' +
-                ", roletext='" + roletext + '\'' +
-                ", woname='" + woname + '\'' +
-                ", dengji=" + dengji +
-                '}';
+    public List<String> getXlist() {
+        return xlist;
+    }
+
+    public void setXlist(List<String> xlist) {
+        this.xlist = xlist;
+    }
+
+    public List<Integer> getYlist() {
+        return ylist;
+    }
+
+    public void setYlist(List<Integer> ylist) {
+        this.ylist = ylist;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public Integer getPeoplenum() {
+        return peoplenum;
+    }
+
+    public void setPeoplenum(Integer peoplenum) {
+        this.peoplenum = peoplenum;
     }
 }
