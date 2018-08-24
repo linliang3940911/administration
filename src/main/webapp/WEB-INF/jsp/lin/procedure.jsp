@@ -130,6 +130,7 @@
                     id=str[int].woid
                     name=str[int].woname
                 }
+
                 $.ajax({
                     url:"<%=request.getContextPath()%>/modle/application?woid="+""+id+"",
                     type:"post",
