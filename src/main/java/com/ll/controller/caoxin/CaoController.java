@@ -34,6 +34,7 @@ import java.util.Map;
 　　*/
 @Controller
 @RequestMapping(value = "/caoxin")
+@org.springframework.context.annotation.Lazy(value=false)
 public class CaoController {
     @Autowired
     private CXService cxService;
@@ -349,10 +350,18 @@ public class CaoController {
     }
     @RequestMapping("/zhipai")
     public   String  zhipai(Model  model,String proceid){
-        List<Procedures> list1 = cxService.queryrole();
-        model.addAttribute("list",list1);
         ShenQing shen = cxService.tongguo(proceid);
         model.addAttribute("shen",shen);
+        String procerole= shen.getProcerole();
+        String [] split= procerole.split(",");
+        String userrole="";
+        for (int i = 0; i < split.length; i++) {
+            userrole=split[0];
+        }
+        String userid=shen.getUserid();
+        List<User> list1 = cxService.queryUser(userrole,userid);
+        model.addAttribute("list",list1);
+
         return "xin/role";
     }
     @RequestMapping("/queryLiu")
@@ -365,9 +374,9 @@ public class CaoController {
     }
     @RequestMapping("/zhipairen")
     @ResponseBody
-    public   String  zhipairen(String  zxc,String proceid){
+    public   String  zhipairen(String  zxc,String proceid,String  usid){
        ShenQing shen = cxService.tongguo(proceid);
-        cxService.zhipairen(zxc,shen);
+        cxService.zhipairen(zxc,shen,usid);
         return "success";
     }
 
@@ -429,5 +438,27 @@ public class CaoController {
     @RequestMapping("/daiban")
     public  String  daiban(){
         return "xin/daiban";
+    }
+
+
+
+
+    @RequestMapping("querylist")
+    @ResponseBody
+    public ShenQing querylist(){
+        List<ShenQing> list = cxService.querylist();
+        //列
+        List<String> xlist = new ArrayList<String>();
+        //行
+        List<Integer> ylist = new ArrayList<Integer>();
+
+        for (int i = 0; i < list.size(); i++) {
+            xlist.add(list.get(i).getMonth()+"月");
+            ylist.add(list.get(i).getPeoplenum());
+        }
+        ShenQing emp = new ShenQing();
+        emp.setXlist(xlist);
+        emp.setYlist(ylist);
+        return emp;
     }
 }
