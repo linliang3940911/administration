@@ -30,11 +30,7 @@
 
     <center><h2>新增流程页面</h2></center>
     <form  class="form-inline"  id="form-id">
-        <input type="radio" name="dengji" value="1"/>紧急流程
-        <input type="radio" name="dengji" value="2"/>重要流程
-        <input type="radio" name="dengji" value="3"/>普通流程
-        <input type="radio" name="dengji" value="4"/>其他代办流程
-        <div class="input-group"  >
+        <div class="input-group" >
             <div  class="input-group-addon" style="width:100px">流程分类</div>
             <select name="workType"  class="form-control"  onmousedown="querytree()"  id="workid">
                 <option >-请选择-</option>
