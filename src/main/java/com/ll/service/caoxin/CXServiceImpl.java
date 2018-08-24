@@ -93,20 +93,20 @@ public class CXServiceImpl implements CXService {
                 }
             }
             zxc=zxc.substring(1);
+
             shen.setProcerole(split[0]+","+shen.getProcerole());
             shen.setShenhetongguo(zxc);
+
         }
+
         if(str.indexOf(",")==-1){
             shen.setProcerole(str+","+shen.getProcerole());
             shen.setShenhetongguo("");
+
         }
        cxdao.updatebohui(shen);
     }
 
-    @Override
-    public List<Procedures> queryrole() {
-        return cxdao.queryrole();
-    }
     @Override
     public void updatepro(ShenQing shen2){
             String pro = shen2.getProcerole();
@@ -120,12 +120,21 @@ public class CXServiceImpl implements CXService {
                 }
             }
         str=str.substring(1);
-        shen2.setShenhetongguo(split[0]+","+shen2.getShenhetongguo());
-        shen2.setProcerole(str);
-        cxdao.updatepro(shen2);
+
+        if("".equals(shen2.getShenhetongguo())){
+            shen2.setShenhetongguo(split[0]);
+            shen2.setProcerole(str);
+            cxdao.updateUseridasd(shen2);
+        }else if(!"".equals(shen2.getShenhetongguo())&&shen2.getShenhetongguo()!=null){
+            shen2.setShenhetongguo(split[0]+","+shen2.getShenhetongguo());
+            shen2.setProcerole(str);
+            cxdao.updateUseridasd(shen2);
+        }
     }
     @Override
-    public void zhipairen(String zxc,ShenQing shen) {
+    public void zhipairen(String zxc,ShenQing shen,String  usid) {
+       String userids=shen.getUserid();
+       shen.setUserid(usid);
        String  pro = shen.getProcerole();
        String dd="";
         if(pro.indexOf(",") != -1){
@@ -142,8 +151,9 @@ public class CXServiceImpl implements CXService {
         if(pro.indexOf(",") == -1){
             shen.setZhipairole(shen.getProcerole());
             shen.setProcerole(zxc);
+            shen.setUserid(usid);
         }
-        cxdao.updatePro(shen);
+        cxdao.zhipairen(shen);
     }
 
     @Override
@@ -171,6 +181,16 @@ public class CXServiceImpl implements CXService {
     @Override
     public List<ShenQing> queryLiu(String userid) {
         return cxdao.queryLiu(userid);
+    }
+
+    @Override
+    public List<User> queryUser(String userrole,String userid) {
+        return cxdao.queryUser(userrole,userid);
+    }
+
+    @Override
+    public List<ShenQing> querylist() {
+        return cxdao.querylist();
     }
 
     @Override
@@ -205,7 +225,6 @@ public class CXServiceImpl implements CXService {
         String name = ossClient.uploadImg2Oss(file);
         String imgUrl = ossClient.getImgUrl(name);
         String[] split = imgUrl.split("\\?");
-
         return split[0];
     }
 
