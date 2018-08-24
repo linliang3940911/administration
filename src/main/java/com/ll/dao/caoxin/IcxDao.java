@@ -56,18 +56,16 @@ public interface IcxDao {
     ShenQing tongguo(@Param("proceid")String proceid);
 
     @Update("update ll_shenqing set shenhetongguo=#{shenhetongguo},procerole=#{procerole} where proceid=#{proceid}")
-    void updatepro(ShenQing shen2);
+    void updatepro(ShenQing shen);
     @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` ")
     List<ShenQing> queryShenqing();
     @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM  ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=0 AND t.`woid`=lw.`woid`")
     List<ShenQing> queryCaoGao();
 
-    @Update("update ll_shenqing set shenhetongguo=#{shenhetongguo},procerole=#{procerole} where proceid=#{proceid}")
+    @Update("update ll_shenqing set shenhetongguo=#{shenhetongguo},procerole=#{procerole},userid=#{userid} where proceid=#{proceid}")
     void updatebohui(ShenQing shen);
-    @Select("select *  from ll_role ")
-    List<Procedures> queryrole();
-    @Update("update ll_shenqing set  procerole=#{procerole},zhipairole=#{zhipairole}  where proceid=#{proceid}")
-    void updatePro(ShenQing shen);
+    @Update("update ll_shenqing set  procerole=#{procerole},zhipairole=#{zhipairole},userid=#{userid}  where proceid=#{proceid}")
+    void updatePro(ShenQing shen2);
     @Select("select * from ll_workTree")
     List<WorkTree> queryListTree();
     @Select("SELECT t.*, (SELECT  GROUP_CONCAT(c.roletext) FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` FROM ll_shenqing t ,ll_workname lw WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND lw.dengji=1  and t.userid=#{userid}")
@@ -82,4 +80,15 @@ public interface IcxDao {
             " FROM ll_role c  WHERE  FIND_IN_SET(c.roleid,t.procerole)) AS  roletext ,lw.`dengji`,lw.`woname` \n" +
             " FROM ll_shenqing t ,ll_workname lw  WHERE t.proceType=1 AND t.`woid`=lw.`woid` AND  t.`userid`=#{userid} ")
     List<ShenQing> queryLiu(@Param("userid") String userid);
+    @Select("SELECT * FROM USER us,ll_role  lr  WHERE  us.userrole=lr.roleid AND  us.userrole=3 AND us.userid  !=#{userid}")
+    List<User> queryUser(@Param("userrole") String  userrole,@Param("userid") String userid);
+    @Update("update ll_shenqing set userid=#{userid},procerole=#{procerole},zhipairole=#{zhipairole}  where proceid=#{proceid}")
+    void zhipairen(ShenQing shen);
+
+    @Update("update ll_shenqing set  procerole=#{procerole},shenhetongguo=#{shenhetongguo},userid=#{userid}  where proceid=#{proceid}")
+    void updateUseridasd(ShenQing shen2);
+    @Select("SELECT DATE_FORMAT(procedate,\"%m\") MONTH,COUNT(*) peoplenum FROM ll_shenqing \n" +
+            "\t\tWHERE DATE_FORMAT(procedate,\"%Y\") = '2018'\n" +
+            "\t\tGROUP BY DATE_FORMAT(procedate,\"%m\")")
+    List<ShenQing> querylist();
 }
