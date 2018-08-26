@@ -65,5 +65,11 @@ public interface CXService {
 
     List<User> queryUser(String userrole,String userid);
 
-    List<ShenQing> querylist();
+    List<ShenQing> querylist(String userid);
+
+    ShenQing queryUserPhone(String proceid);
+
+    User queryUserP(String userid);
+
+    void updatePhone(ShenQing list);
 }

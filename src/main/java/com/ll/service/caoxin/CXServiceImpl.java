@@ -52,11 +52,9 @@ public class CXServiceImpl implements CXService {
         User user= cxdao.queryRoles(userid);
         List<ShenQing> query=new ArrayList<ShenQing>();
         for (ShenQing shenQing : queryshen) {
-            String[] split = shenQing.getRoletext().split(",");
-
-                if(user.getRoletext().equals(split[0])){
-                    query.add(shenQing);
-
+            String[] split = shenQing.getProcerole().split(",");
+            if(user.getUserrole().equals(split[0])){
+                query.add(shenQing);
             }
         }
         return query;
@@ -119,6 +117,10 @@ public class CXServiceImpl implements CXService {
     @Override
     public void updatepro(ShenQing shen2){
             String pro = shen2.getProcerole();
+            if(pro.indexOf(",")==-1){
+                shen2.setShenhetongguo(pro+","+shen2.getShenhetongguo());
+                shen2.setProcerole("");
+            }
             String[] split = pro.split(",");
             String str="";
             if(pro.indexOf(",")!=-1){
@@ -127,18 +129,16 @@ public class CXServiceImpl implements CXService {
                         str += ","+split[i];
                     }
                 }
+                str=str.substring(1);
+                if("".equals(shen2.getShenhetongguo())){
+                    shen2.setShenhetongguo(split[0]);
+                    shen2.setProcerole(str);
+                }else if(!"".equals(shen2.getShenhetongguo())&&shen2.getShenhetongguo()!=null){
+                    shen2.setShenhetongguo(split[0]+","+shen2.getShenhetongguo());
+                    shen2.setProcerole(str);
+                }
             }
-        str=str.substring(1);
-
-        if("".equals(shen2.getShenhetongguo())){
-            shen2.setShenhetongguo(split[0]);
-            shen2.setProcerole(str);
-            cxdao.updateUseridasd(shen2);
-        }else if(!"".equals(shen2.getShenhetongguo())&&shen2.getShenhetongguo()!=null){
-            shen2.setShenhetongguo(split[0]+","+shen2.getShenhetongguo());
-            shen2.setProcerole(str);
-            cxdao.updateUseridasd(shen2);
-        }
+        cxdao.updateUseridasd(shen2);
     }
     @Override
     public void zhipairen(String zxc,ShenQing shen,String  usid) {
@@ -172,7 +172,16 @@ public class CXServiceImpl implements CXService {
 
     @Override
     public List<ShenQing> queryLiuChang1(String  userid) {
-        return cxdao.queryLiuChang1(userid);
+        List<ShenQing>queryshen= cxdao.queryLiuChang1(userid);
+        User user= cxdao.queryRoles(userid);
+        List<ShenQing> query=new ArrayList<ShenQing>();
+        for (ShenQing shenQing : queryshen) {
+            String[] split = shenQing.getProcerole().split(",");
+            if(user.getUserrole().equals(split[0])){
+                query.add(shenQing);
+            }
+        }
+        return query;
     }
     @Override
     public List<ShenQing> queryLiuChang2(String  userid) {
@@ -198,9 +207,25 @@ public class CXServiceImpl implements CXService {
     }
 
     @Override
-    public List<ShenQing> querylist() {
-        return cxdao.querylist();
+    public List<ShenQing> querylist(String userid) {
+        return cxdao.querylist(userid);
     }
+
+    @Override
+    public ShenQing queryUserPhone(String proceid) {
+        return cxdao.queryUserPhone(proceid);
+    }
+
+    @Override
+    public User queryUserP(String userid) {
+        return cxdao.queryUserP(userid);
+    }
+
+    @Override
+    public void updatePhone(ShenQing list) {
+        cxdao.updatePhone(list);
+    }
+
 
     @Override
     public Map<String, Object> login(User user) {
