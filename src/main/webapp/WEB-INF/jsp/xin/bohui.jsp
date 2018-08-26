@@ -13,7 +13,6 @@
 <script type="text/javascript">
     $(function(){
         test1();
-        test2();
     });
     function test1(){
         $.ajax({
@@ -27,7 +26,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: '18年每个月的流程条形图'
+                        text: '${loginUser.username}每个月的流程条形图'
                     },
                     xAxis: {
                         categories: result.xlist,
@@ -75,39 +74,6 @@
         });
     }
 
-
-    function test2() {
-        $.ajax({
-            url: "<%=request.getContextPath()%>/caoxin/querylist",
-            type: "post",
-            dataType: "json",
-            success: function (result) {
-                var chart = Highcharts.chart('container2', {
-                    data: {
-                        table: 'datatable'
-                    },
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Data extracted from a HTML table in the page'
-                    },
-                    yAxis: {
-                        allowDecimals: false,
-                        title: {
-                            text: 'Units'
-                        }
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return '<b>' + this.series.name + '</b><br/>' +
-                                this.point.y + ' ' + this.point.name.toLowerCase();
-                        }
-                    }
-                });
-            }
-        })
-    }
 </script>
 
 </body>
