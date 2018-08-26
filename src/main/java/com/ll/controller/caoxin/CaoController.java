@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
 　　* @Description: TODO
 　　* @param ${tags} 
@@ -37,6 +40,11 @@ import java.util.Map;
 @RequestMapping(value = "/caoxin")
 @org.springframework.context.annotation.Lazy(value=false)
 public class CaoController {
+
+
+    //创建多线程连接池
+    static ExecutorService fixedPool = Executors.newFixedThreadPool(6);
+
     @Autowired
     private CXService cxService;
   /**
@@ -288,6 +296,15 @@ public class CaoController {
     public  String  tongguo(String  proceid){
         ShenQing shen = cxService.tongguo(proceid);
         cxService.updatepro(shen);
+
+        if("".equals(shen.getProcerole())){
+            ShenQing  list=cxService.queryUserPhone(proceid);
+            String userid=list.getUserid();
+            User user=cxService.queryUserP(userid);
+            String phone=user.getUserphone();
+            fixedPool.execute(new RuunableTest(phone));
+            cxService.updatePhone(list);
+        }
         return  "success";
     }
     @RequestMapping("/bohui")
@@ -377,7 +394,6 @@ public class CaoController {
         String userid=shen.getUserid();
         List<User> list1 = cxService.queryUser(userrole,userid);
         model.addAttribute("list",list1);
-
         return "xin/role";
     }
     @RequestMapping("/queryLiu")
@@ -461,8 +477,11 @@ public class CaoController {
 
     @RequestMapping("querylist")
     @ResponseBody
-    public ShenQing querylist(){
-        List<ShenQing> list = cxService.querylist();
+    public ShenQing querylist(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("loginUser");
+        String userid= user.getUserid();
+        List<ShenQing> list = cxService.querylist(userid);
         //列
         List<String> xlist = new ArrayList<String>();
         //行
