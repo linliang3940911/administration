@@ -106,7 +106,14 @@
                 {field:'jieshutime',title:'结束时间',width:200},
                 {field:'jiabantime',title:'加班时长(小时)',width:200,
                     formatter:function (value,row,index) {
-                        return "5小时";
+                        var s1=row.kaishitime;
+                        var s2=row.jieshutime;
+                        var date=new Date(s1);
+                        var xx =new Date(s2);
+                        var aa= date.getTime();
+                        var cc=xx.getTime();
+                        var ff=(cc-aa)/(1000 * 60 * 60);
+                        return "约"+ff+"小时";
                     }
                 },
                 {field:'jiabanyuanyinaa',title:'加班原因(点击查看详细)',width:200,
