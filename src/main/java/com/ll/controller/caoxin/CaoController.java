@@ -481,6 +481,7 @@ public class CaoController {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("loginUser");
         String userid= user.getUserid();
+
         List<ShenQing> list = cxService.querylist(userid);
         //列
         List<String> xlist = new ArrayList<String>();
