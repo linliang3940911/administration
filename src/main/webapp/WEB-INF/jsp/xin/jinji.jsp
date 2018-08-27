@@ -69,19 +69,9 @@
                 {field:'woname',title:'流程名字',width:300},
                 {field:'act',title:'操作',width:300,
                     formatter: function(value,row,index){
-
-                        if(row.roletext!=null){
                             var  zxc=  '<button class="btn btn-primary " id="butt1"  data-dismiss="modal" aria-hidden="true" onclick="tongguo(\''+row.proceid+'\')">通过</button>'
                                 +'<button class="btn btn-primary "  id="butt2" data-dismiss="modal" aria-hidden="true" onclick="bohui(\''+row.proceid+'\')">驳回</button>'
                             return zxc;
-                        }
-                        if(row.roletext==null){
-                            var  zxc=  '<button class="btn btn-default " id="butt1"  data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">通过</button>'
-                                +'<button class="btn btn-default "  id="butt2" data-dismiss="modal" aria-hidden="true" style="color: #4c4c4c">驳回</button>'
-                            return zxc;
-
-                        }
-
                     }
                 },
 
