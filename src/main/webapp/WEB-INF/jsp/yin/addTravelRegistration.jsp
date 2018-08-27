@@ -36,6 +36,7 @@
                   <td>
                       <label>事由：</label>
                   </td>
+
                   <td>
                           <textarea class="form-control" name="travelyuanyin" rows="3"></textarea>
                   </td>
@@ -45,16 +46,30 @@
                             <label>开始时间：</label>
                       </td>
                       <td>
-                          <input type="datetime-local" required ="required" name="kaishi" style="width:200px">
+                          <input type="datetime-local" required ="required" name="kaishi" style="width:200px" id="date1">
                           至结束时间
-                          <input type="datetime-local" required ="required" name="jieshu" style="width:200px">
+                          <input type="datetime-local" required ="required" name="jieshu" style="width:200px" id="date2" onmouseout="day()">
                           <br>
-                          共天数<input type="text" value="2" readonly style="width:50px" class="form-control" >天
+                          共天数<input type="text" id="vv" readonly style="width:50px" class="form-control" >天
                       </td>
                 </tr>
           </table>
     </form>
 </center>
+<script type="text/javascript">
+
+    function  day() {
+        var s1=$("#date1").val();
+        var s2= $("#date2").val();
+        var date=new Date(s1);
+        var xx =new Date(s2);
+        var aa= date.getTime();
+        var cc=xx.getTime();
+        var ff=(cc-aa)/(1000 * 60 * 60 *24);
+        $("#vv").val(ff);
+    }
+
+</script>
 
 </body>
 </html>
