@@ -100,6 +100,7 @@
             sidePagination: "server",  //分页方式:client客户端分页,server服务端分页
             striped:true,
             columns:[
+                {field:'userchek',checkbox:true},
                 {field:'shengqingtime',title:'申请时间',width:200},
                 {field:'kaishitime',title:'开始时间',width:200},
                 {field:'jieshutime',title:'结束时间',width:200},
@@ -111,7 +112,14 @@
                 },
                 {field:'chuchaishu',title:'总出差天数',width:200,
                     formatter:function (value,row,index) {
-                            return "30天";
+                        var s1=row.kaishitime;
+                        var s2=row.jieshutime;
+                        var date=new Date(s1);
+                        var xx =new Date(s2);
+                        var aa= date.getTime();
+                        var cc=xx.getTime();
+                        var ff=(cc-aa)/(1000 * 60 * 60 * 24);
+                        return "约"+ff+"天";
                     }
                 }
             ]
